@@ -1,0 +1,57 @@
+#############################
+# CodeIgniter 3 Gitignore  #
+#############################
+
+# Cache, Logs, Sessions
+application/cache/*
+!application/cache/index.html
+
+application/logs/*
+!application/logs/index.html
+
+application/sessions/*
+!application/sessions/index.html
+
+# Config yang berisi credential sensitif
+application/config/database.php
+application/config/config.php
+application/config/email.php
+
+# ENV file
+.env
+.env.*
+
+# Composer dependencies
+vendor/
+
+# Uploads / File user input
+uploads/
+assets/uploads/
+public/uploads/
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# IDEs / Editors / Tools
+.idea/
+.vscode/
+nbproject/
+*.sublime-project
+*.sublime-workspace
+
+# Backup / Temporary
+*.bak
+*.tmp
+*.old
+*.zip
+*.rar
+*.tar
+*.tar.gz
+
+# Node modules (jika ada frontend builder)
+node_modules/
+
+# Composer lock file (opsional)
+composer.lock
+

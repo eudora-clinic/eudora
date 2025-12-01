@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eudora - Report Guest Online Admin</title>
+
+    <style>
+        .btn-primary {
+            background-color: #e0bfb2 !important;
+            color: #666666 !important;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+
+        .nav-tabs {
+            border-bottom: 2px solid #e0bfb2;
+        }
+
+        .nav-tabs .nav-item {
+            margin-right: 5px;
+        }
+
+        .nav-tabs .nav-link {
+            background-color: #f5e5de;
+            /* Warna latar belakang tab */
+            border: 1px solid #e0bfb2;
+            color: #8b5e4d;
+            /* Warna teks */
+            border-radius: 8px 8px 0 0;
+            /* Membuat sudut atas membulat */
+            padding: 10px 15px;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #e0bfb2;
+            color: white;
+        }
+
+        .nav-tabs .nav-link.active {
+            background-color: #e0bfb2 !important;
+            color: white;
+            border-bottom: 2px solid #d1a89b;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 15px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .tab-content {
+            padding: 0 !important;
+        }
+
+        .bg-thead {
+            background-color: #f5e0d8 !important;
+            color: #666666 !important;
+            text-transform: uppercase;
+            font-size: 12px;
+            font-weight: 100 !important;
+        }
+
+        .mycontaine {
+            font-size: 12px !important;
+        }
+
+        /* Jika diperlukan, pastikan semua elemen di dalamnya mewarisi ukuran font tersebut */
+        .mycontaine * {
+            font-size: inherit !important;
+        }
+
+        .card-header-info {
+            background: #f5e0d8;
+        }
+
+        .copy-btn-report {
+            background-color: #4CAF50;
+            /* Warna hijau */
+            color: white;
+            border: none;
+            padding: 4px 9px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* display: flex;
+            align-items: center; */
+            gap: 5px;
+        }
+
+        .copy-btn-report:hover {
+            background-color: #45a049;
+            /* Warna hijau lebih gelap */
+        }
+
+        .copy-btn-report i {
+            font-size: 16px;
+        }
+
+        .copy-btn-refferal {
+            background-color: #4CAF50;
+            /* Warna hijau */
+            color: white;
+            border: none;
+            padding: 4px 9px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            /* display: flex;
+            align-items: center; */
+            gap: 5px;
+        }
+
+        .copy-btn-refferal:hover {
+            background-color: #45a049;
+            /* Warna hijau lebih gelap */
+        }
+
+        .copy-btn-refferal i {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <div class="mycontaine">
+            <div class=" ">
+                <div class="row gx-4">
+                    <div class="col-md-12 mt-3">
+                        <div class=" " id="dailySales">
+                            <div class="card">
+                                <h3 class="card-header card-header-info" style=" font-weight: bold; color: #666666;">
+                                    LIST LINK AFFILIATE
+                                </h3>
+                                <div class="table-wrapper p-4">
+                                    <div class="table-responsive">
+                                        <table id="tableDailySales" class="table table-striped table-bordered" style="width:100%">
+                                            <thead class="bg-thead">
+                                                <tr>
+                                                    <th style="text-align: center;">NO</th>
+                                                    <th style="text-align: center;">DATEJOIN</th>
+                                                    <th style="text-align: center;">AFFILIATOR</th>
+                                                    <th style="text-align: center;">AFFILIATOR FROM</th>
+                                                    <th style="text-align: center;">ACCOUNT NO</th>
+                                                    <th style="text-align: center;">STATUS</th>
+                                                    <th style="text-align: center;">LINK REFFERAL</th>
+                                                    <th style="text-align: center;">LINK REPORT</th>
+                                                    <th style="text-align: center;">ACTION</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $no = 1;
+                                                foreach ($linkAffiliate as $row) {
+                                                ?>
+                                                    <tr role="" style="font-weight: 400;">
+                                                        <td style="text-align: center;"><?= $no++ ?></td>
+                                                        <td style="text-align: center;"><?= $row['DATEJOIN'] ?></td>
+                                                        <td style="text-align: center;">
+                                                            <span id="sp-affiliatename-<?= $row['ID'] ?>"><?= $row['NAME'] ?></span>
+                                                            <input class="form-control" type="text" id="affiliatename-<?= $row['ID'] ?>" value="<?= $row['NAME'] ?>" style="width: 100%; display: none;">
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span id="sp-employeefrom-<?= $row['ID'] ?>"><?= $row['FROMEMPLOYEENAME'] ?></span>
+                                                            <select id="employeefrom-<?= $row['ID'] ?>" class="form-control" style="display: none;">
+                                                                <option value="">PILIH EMPLOYEE</option>
+                                                                <?php foreach ($employeeMarketing as $e) { ?>
+                                                                    <option value="<?= $e['ID'] ?>" <?= ($e['ID'] == $row['FROMEMPLOYEEID']) ? 'selected' : '' ?>><?= $e['NAME'] ?></option>
+                                                                <?php } ?>
+                                                            </select>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span id="sp-accountnumber-<?= $row['ID'] ?>"><?= $row['ACCOUNTNUMBER'] ?></span>
+                                                            <input class="form-control" type="text" id="accountnumber-<?= $row['ID'] ?>" value="<?= $row['ACCOUNTNUMBER'] ?>" style="width: 100%; display: none;">
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <span id="sp-status-<?= $row['ID'] ?>"><?= $row['STATUS'] ?></span>
+                                                            <select id="status-<?= $row['ID'] ?>" class="form-control text-center" style="width: 100%; display: none;">
+                                                                <option value="1" <?= isset($row['STATUSID']) && $row['STATUSID'] == 1 ? 'selected' : '' ?>>Aktif</option>
+                                                                <option value="0" <?= isset($row['STATUSID']) && $row['STATUSID'] == 0 ? 'selected' : '' ?>>Nonaktif</option>
+                                                            </select>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <button class="copy-btn-refferal" data-text="https://sys.eudoraclinic.com:84/registr/referal-code/<?= $row['ID'] ?>">
+                                                                <i class="fas fa-copy"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <button class="copy-btn-report" data-text="https://sys.eudoraclinic.com:84/app/reportGuestAffiliate/<?= $row['ID'] ?>">
+                                                                <i class="fas fa-copy"></i>
+                                                            </button>
+                                                        </td>
+                                                        <td style="text-align: center;">
+                                                            <button id="btn-edit-header-<?= $row['ID'] ?>" class="btn btn-sm btn-primary" onclick="editHeader('<?= $row['ID'] ?>');"><i class="material-icons">edit</i> Edit</button>
+                                                            <button id="btn-save-header-<?= $row['ID'] ?>" class="btn btn-sm btn-success" onclick="saveHeader('<?= $row['ID'] ?>');" style="display: none;"><i class="material-icons">save</i> Save</button>
+                                                        </td>
+
+                                                    </tr>
+                                                <?php } ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function() {
+        $('#tableDailySales').DataTable({
+            "pageLength": 100,
+            "lengthMenu": [5, 10, 15, 20, 25, 100],
+            // select: true,
+            'bAutoWidth': false,
+        });
+
+
+    });
+
+    $('#tableDailySales').removeClass('display').addClass(
+        'table table-striped table-hover table-compact');
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".copy-btn-refferal").forEach(button => {
+            button.addEventListener("click", function() {
+                let textToCopy = this.getAttribute("data-text"); // Ambil teks dari atribut data-text
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    alert("Teks berhasil disalin!");
+                }).catch(err => {
+                    console.error("Gagal menyalin teks", err);
+                });
+            });
+        });
+
+
+
+        document.querySelectorAll(".copy-btn-report").forEach(button => {
+            button.addEventListener("click", function() {
+                let textToCopy = this.getAttribute("data-text"); // Ambil teks dari atribut data-text
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    alert("Teks berhasil disalin!");
+                }).catch(err => {
+                    console.error("Gagal menyalin teks", err);
+                });
+            });
+        });
+    });
+</script>
+
+<script>
+    _mod = '<?= $mod ?>';
+
+    function editHeader(id) {
+        console.log(id);
+
+        document.getElementById('sp-employeefrom-' + id).style.display = 'none';
+        document.getElementById('employeefrom-' + id).style.display = 'block';
+
+        document.getElementById('sp-affiliatename-' + id).style.display = 'none';
+        document.getElementById('affiliatename-' + id).style.display = 'block';
+
+        document.getElementById('sp-accountnumber-' + id).style.display = 'none';
+        document.getElementById('accountnumber-' + id).style.display = 'block';
+
+        document.getElementById('sp-status-' + id).style.display = 'none';
+        document.getElementById('status-' + id).style.display = 'block';
+
+
+        document.getElementById('btn-edit-header-' + id).style.display = 'none';
+        document.getElementById('btn-save-header-' + id).style.display = 'inline-block';
+    }
+
+    function saveHeader(id) {
+        let fromemployeeid = document.getElementById('employeefrom-' + id).value;
+        let affiliatename = document.getElementById('affiliatename-' + id).value;
+        let accountnumber = document.getElementById('accountnumber-' + id).value;
+        let status = document.getElementById('status-' + id).value;
+
+        console.log(fromemployeeid, affiliatename, accountnumber, status);
+        
+
+        $.ajax({
+            url: "<?= base_url('App/updateAffiliate') ?>", // Sesuaikan dengan route Anda
+            type: "POST",
+            data: {
+                id: id,
+                fromemployeeid: fromemployeeid,
+                affiliatename,
+                accountnumber,
+                status
+            },
+            dataType: "json",
+            success: function(response) {
+                console.log(response);
+                
+                if (response.success) {
+                    alert("Data berhasil diperbarui!");
+                    location.reload();
+                } else {
+                    alert("Gagal memperbarui data!");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+                alert("Terjadi kesalahan saat memperbarui data.");
+            }
+        });
+    }
+</script>
+
+</html>

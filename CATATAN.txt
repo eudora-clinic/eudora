@@ -1,0 +1,9 @@
+1. CI v3.1.10 
+2. PHP v7.3.6
+3. mPDF v7
+
+*Pada CI v3 penulisan nama class dan nama file harus sama dan diawali huruf BESAR
+*font awesome dan core js menggunakan CDN. Jika ada kendala bisa diganti menggunakan hasil download
+D:\Document\Palu\mrpariwisata\css_js_cdn
+
+

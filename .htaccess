@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	#RewriteBase /
+    #RewriteBase /home/u7684940/public_html/demo/mrbontang
+	
+#Ganti dengan alamat path jika site bukan root
+
+    RewriteCond $1 !^(index\.php|assets|application|repository|favicon\.ico|robots.txt|sitemap.xml)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+</IfModule>
+<IfModule !mod_rewrite.c>
+    ErrorDocument 402 /home/u7684940/domains/titasic.tech/public_html/demo/mrbontang/index\.php
+</IfModule>
