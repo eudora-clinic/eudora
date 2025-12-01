@@ -1063,7 +1063,7 @@ class ControllerPurchasing extends CI_Controller
 		$date = $this->input->get('date') ?? null;
 		$company = $this->input->get('company') ?? null;
 
-		if ($level == 7 || $level == 20 || $level == 21 || $level == 9 || $level == 4 || $level == 24 || $level == 22) {
+		if ($level == 7 || $level == 20 || $level == 21 || $level == 9 || $level == 4 || $level == 24 || $level == 22 || $level == 99) {
 			$data = $this->ModelPurchasing->get_all_purchase_order_by_date($date, $company);
 		} else {
 			$data = $this->ModelPurchasing->get_all_purchase_order_by_date_user($date, $userid);

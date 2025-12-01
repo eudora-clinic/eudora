@@ -755,7 +755,7 @@ $level = $this->session->userdata('level');
 								</div>
 							</li>
 							<li class="nav-item">
-								<a style="font-weight: bold;" class="nav-link" href="<?= base_url('reportOrderMonthly') ?>">RERPORT PEMBELIAN</a>
+								<a style="font-weight: bold;" class="nav-link" href="<?= base_url('reportOrderMonthly') ?>">REPORT PEMBELIAN</a>
 							</li>
 						<?php endif; ?>
 
@@ -1537,6 +1537,233 @@ $level = $this->session->userdata('level');
 									<a class="dropdown-item" href="<?= base_url('listJob') ?>">LIST JOB</a>
 								</div>
 							</li>
+						<?php endif; ?>
+
+						<?php if ($level == 99): ?>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu5" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									DATA
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu5">
+									<a class="dropdown-item" href="<?= base_url('listTarget') ?>">LIST TARGET</a>
+									<a class="dropdown-item" href="<?= base_url('listEmployee') ?>">LIST EMPLOYEE</a>
+									<a class="dropdown-item" href="<?= base_url('balancePrepaidWess') ?>">BALANCE PREPAID
+										WESS</a>
+									<a class="dropdown-item" href="<?= base_url('reportKPIBeautyConsultant') ?>">KPI BC</a>
+									<a class="dropdown-item" href="<?= base_url('reportUsedIngridientsIncludeCost') ?>">COST
+										COGS</a>
+									<a class="dropdown-item" href="<?= base_url('listExpend') ?>">EXPEND COST</a>
+									<a class="dropdown-item" href="<?= base_url('ingredientsList') ?>">INGREDIENTS LIST</a>
+									<a class="dropdown-item" href="<?= base_url('serviceList') ?>">SERVICES LIST</a>
+									<a class="dropdown-item" href="<?= base_url('packageList') ?>">PACKAGES LIST</a>
+									<a style="font-weight: bold;" class="nav-link" href="<?= base_url('saleTicketList') ?>">SALE
+									TICKET LIST</a>
+									<a style="font-weight: bold;" class="nav-link"
+									href="<?= base_url('bookAppointment') ?>">BOOKING</a>
+
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu10" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									REPORT
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu10">
+									<a class="dropdown-item" href="<?= base_url('reportUsedIngridients') ?>">REPORT USED
+										INGEREDIENTS</a>
+									<a class="dropdown-item" href="<?= base_url('reportProfitAndLoss') ?>">REPORT PNL</a>
+
+									<a class="dropdown-item" href="<?= base_url('reportRevenueByCustomer') ?>">REPORT
+										REVENUE By CUSTOMER</a>
+								</div>
+							</li>
+
+
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu4" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									REPORT COMMISSION
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu4">
+									<!-- <a class="dropdown-item"
+										href="<?= base_url('reportHandWorkCommissionDokterTherapist') ?>">COMMISSION HAND
+										WORK DOKTER, BTC DAN NURSE</a> -->
+									<a class="dropdown-item" href="<?= base_url('reportDoingCommission') ?>">REPORT DOING
+										COMMISSION (PER MEY)</a>
+									<a class="dropdown-item"
+										href="<?= base_url('reportCommissionAppointmentCSO') ?>">COMMISSION CSO AND BTC</a>
+									<a class="dropdown-item" href="<?= base_url('reportPrescriptionDoctor') ?>">COMMISSION
+										PRESCRIPTION DOKTER</a>
+									<a class="dropdown-item" href="<?= base_url('reportGuestOnlineAdmin') ?>">COMMISSION
+										FIRST VISIT (MARKETING)</a>
+									<a class="dropdown-item" href="<?= base_url('reportCommissionConsultant') ?>">COMMISSION
+										SALES</a>
+									<a class="dropdown-item" href="<?= base_url('reportCommissionOM') ?>">COMMISSION OM</a>
+									<a class="dropdown-item" href="<?= base_url('reportGuestEvent') ?>">COMMISSION SALES AND
+										MANGER EVENT ROADSHOW</a>
+
+									<a class="dropdown-item"
+										href="<?= base_url('reportCommissionSubscription') ?>">COMMISSION SUBSCRIPTION / TOP
+										UP</a>
+									<a class="dropdown-item" href="<?= base_url('reportGuestMarketing') ?>">REPORT
+										COMMISSION AFFILIATE</a>
+									<a class="dropdown-item" href="<?= base_url('reportCommissionPerInvoice') ?>">COMMISSION
+										PER INVOICE</a>
+										<a class="dropdown-item" href="<?= base_url('reportGuestCustomerServiceOnline') ?>">REPORT COMMISSION TRILOGY</a>
+
+								</div>
+							</li>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu2" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									REPORT TRANSACTION
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu2">
+									<a class="dropdown-item" href="<?= base_url('dailySalesReconciliation') ?>">DAILY SALES
+										REPORT</a>
+									<a class="dropdown-item" href="<?= base_url('summaryRevenuePerDay') ?>">SUMMARY REVENUE
+										PER DAY</a>
+									<a class="dropdown-item" href="<?= base_url('reportRevenueBySales') ?>">REPORT REVENUE
+										BY SALES</a>
+									<a class="dropdown-item" href="<?= base_url('transactionTreatmentToday') ?>">TRANSACTION
+										TREATMENT TODAY</a>
+									<a class="dropdown-item" href="<?= base_url('transactionTodayPaket') ?>">TRANSACTION
+										PACKAGE TODAY</a>
+									<a class="dropdown-item" href="<?= base_url('transactionTodayRetail') ?>">TRANSACTION
+										PRODUCT TODAY</a>
+									<a class="dropdown-item" href="<?= base_url('saleTicketDetail') ?>">SALES
+										DETAIL</a>
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu3" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									INVOICE MASTER
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu3">
+									<a class="dropdown-item" href="<?= base_url('invoiceMembership') ?>">INVOICE PACKAGE</a>
+									<a class="dropdown-item" href="<?= base_url('invoiceTreatment') ?>">INVOICE
+										TREATMENT</a>
+									<a class="dropdown-item" href="<?= base_url('invoiceRetail') ?>">INVOICE PRODUCT</a>
+
+									<a class="dropdown-item" href="<?= base_url('invoiceDownMembership') ?>">INVOICE DP
+										PACKAGE</a>
+									<a class="dropdown-item" href="<?= base_url('invoiceDownTreatment') ?>">INVOICE DP
+										TREATMENT</a>
+									<a class="dropdown-item" href="<?= base_url('invoiceDownProduct') ?>">INVOICE DP
+										PRODUCT</a>
+									<!-- <a class="dropdown-item" href="<?= base_url('summaryRevenuePerDay') ?>">SUMMARY REVENUE PER DAY</a> -->
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu100" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									MANAGEMENT EMPLOYEE
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu100">
+									<a class="dropdown-item" href="<?= base_url('presensiEmployee') ?>">ATTANDANCE DAILY</a>
+									<a class="dropdown-item" href="<?= base_url('summaryPresensiEmployee') ?>">ATTANDANCE
+										SUMMARY</a>
+									<a class="dropdown-item" href="<?= base_url('listEmployee') ?>">LIST EMPLOYEE</a>
+									<a class="dropdown-item" href="<?= base_url('leavePermissionRequest') ?>">LEAVE
+										REQUEST</a>
+									<div class="dropdown-divider"></div>
+
+									<a class="dropdown-item" href="<?= base_url('hrSetLocationPin') ?>">SET LOCATION PIN</a>
+									<a class="dropdown-item" href="<?= base_url('employeeAccountList') ?>">EMPLOYEE ACCOUNT
+										LIST</a>
+									<a class="dropdown-item" href="<?= base_url('employeeAttendanceList') ?>">EMPLOYEE APPS
+										ATTENDANCE</a>
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu7" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									MASTER
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu0">
+									<a class="dropdown-item" href="<?= base_url('listShift') ?>">LIST SHIFT</a>
+									<a class="dropdown-item" href="<?= base_url('listLeaveType') ?>">LIST LEAVE TYPE</a>
+									<a class="dropdown-item" href="<?= base_url('listAllowanceType') ?>">LIST ALLOWANCE
+										TYPE</a>
+									<a class="dropdown-item" href="<?= base_url('listDeductionType') ?>">LIST DEDUCTION
+										TYPE</a>
+									<a class="dropdown-item" href="<?= base_url('listCompany') ?>">LIST COMPANY</a>
+								</div>
+
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu7" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									FINANCE
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu0">
+									<a class="dropdown-item" href="<?= base_url('listCustomerWithdraw') ?>">CUSTOMER
+										WITHDRAW</a>
+									<a class="dropdown-item" href="<?= base_url('listSubAccountXendit') ?>">LIST SUBACCOUNT
+										XENDIT</a>
+
+								</div>
+
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu4" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									PURCHASING
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu4">
+									<a class="dropdown-item" href="<?= base_url('purchaseRequestList') ?>">PURCHASE
+										REQUEST</a>
+									<a class="dropdown-item" href="<?= base_url('purchaseOrderList') ?>">PURCHASE
+										ORDER</a>
+									<a class="dropdown-item" href="<?= base_url('deliveryOrderList') ?>">DELIVERY
+										ORDER</a>
+								</div>
+							</li>
+
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu0" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									STOCK
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu0">
+									
+									<a class="dropdown-item" href="<?= base_url('reportStockOpname') ?>">STOCK OPNAME</a>
+									<!-- <a class="dropdown-item" href="<?= base_url('stockInList') ?>">STOCK IN LIST</a> -->
+									<!-- <a class="dropdown-item" href="<?= base_url('stockOutList') ?>">STOCK OUT LIST</a> -->
+									 <a class="dropdown-item" href="<?= base_url('report_ingredients') ?>">STOCK BALANCE</a>
+									<a class="dropdown-item" href="<?= base_url('ingredientsList') ?>">ITEM LIST</a>
+									
+									<a class="dropdown-item" href="<?= base_url('stockInList') ?>">STOCK IN LIST</a>
+									<a class="dropdown-item" href="<?= base_url('stockOutList') ?>">STOCK OUT LIST</a>
+								</div>
+							</li>
+
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu700" role="button"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									PAYROLL
+								</a>
+								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu700">
+									<a class="dropdown-item" href="<?= base_url('generateEmployeePayroll') ?>">GENERATE
+										PAYROLL</a>
+									<a class="dropdown-item" href="<?= base_url('approvedEmployeePayroll') ?>">PAYROLL</a>
+									<a class="dropdown-item" href="<?= base_url('allowanceUncertain') ?>">ALLOWANCE
+										UNCERTAIN</a>
+									<a class="dropdown-item" href="<?= base_url('deductionUncertain') ?>">DEDUCTION
+										UNCERTAIN</a>
+								</div>
+							</li>
+
 						<?php endif; ?>
 					</ul>
 				</div>

@@ -2042,6 +2042,30 @@ class ControllerHr extends CI_Controller
         echo json_encode($data);
     }
 
+    public function getCompanyGenerate()
+    {
+        $db_oriskin = $this->load->database('oriskin', true);
+
+        $search = $this->input->get('search');
+
+        if ($search) {
+            $db_oriskin->group_start()
+                ->like('companyname', $search)
+                ->or_like('companycode', $search)
+                ->group_end();
+        }
+
+        $data = $db_oriskin->select('id, companyname, companycode')
+            ->from('mscompany')
+            ->limit(20)
+            ->get()
+            ->result_array();
+
+        echo json_encode($data);
+    }
+
+
+
     public function searchEmployeeCompany()
     {
         $db_oriskin = $this->load->database('oriskin', true);
@@ -2554,7 +2578,7 @@ class ControllerHr extends CI_Controller
             ]);
             exit;
         }
-        
+
         $db_oriskin->where('id', $id);
         $delete = $db_oriskin->delete('employee_company');
 
@@ -2641,10 +2665,10 @@ class ControllerHr extends CI_Controller
                 @TYPE = 1
         ";
 
-        // echo json_encode([
-        //         'status' => 'error',
-        //         'message' => $sql
-        //     ]);
+            // echo json_encode([
+            //         'status' => 'error',
+            //         'message' => $sql
+            //     ]);
 
             $query = $db->query($sql);
             $rows = $query->result_array();

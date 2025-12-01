@@ -660,8 +660,7 @@
                         <th rowspan="2">Jabatan</th>
                         <th rowspan="2">Sallary</th>
                         <th colspan="${type.length}">Status</th>
-                        <th colspan="${deductionType.length}">Deduction</th>
-                        <th colspan="${allowanceType.length}">Allowance</th>
+                       
                     </tr>`;
 
                     // baris kedua header
@@ -671,13 +670,7 @@
                         htmlsummary += `<th>${t.STATUS}</th>`;
                     });
 
-                    deductionType.forEach(function (d) {
-                        htmlsummary += `<th>${d.DEDUCTIONNAME}</th>`;
-                    });
-
-                    allowanceType.forEach(function (a) {
-                        htmlsummary += `<th>${a.ALLOWANCENAME}</th>`;
-                    });
+                    
 
                     htmlsummary += `</tr>`;
 
@@ -772,34 +765,6 @@
 
                         });
 
-                        deductionType.forEach(type => {
-                            const presensi = deductionSummary.find(p =>
-                                p.EMPLOYEEID == emp.EMPLOYEEID && p.DEDUCTIONNAME == type.DEDUCTIONNAME
-                            );
-
-                            let total = presensi?.AMOUNT ?? "0";
-                            
-
-                            rowsummary += `
-                                <td style="text-align: center;">
-                                    <div style="font-weight: bold;">${formatRupiah(total)}</div>
-                                </td>
-                            `;
-                        });
-
-                        allowanceType.forEach(type => {
-                            const presensi = allowanceSummary.find(p =>
-                                p.EMPLOYEEID == emp.EMPLOYEEID && p.ALLOWANCENAME == type.ALLOWANCENAME
-                            );
-
-                            let total = presensi?.AMOUNT ?? "0";
-
-                            rowsummary += `
-                                <td style="text-align: center;">
-                                    <div style="font-weight: bold;">${formatRupiah(total)}</div>
-                                </td>
-                            `;
-                        });
                         rowsummary += `</tr>`;
                         $("#employee-listsummary").append(rowsummary);
                     });
