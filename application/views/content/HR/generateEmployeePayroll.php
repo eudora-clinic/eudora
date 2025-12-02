@@ -159,7 +159,6 @@
                     results: data.map(loc => ({
                         id: loc.id,
                         text: loc.companyname + ' - ' + loc.companycode
-                        // atau: `${loc.companyname} - ${loc.companycode}`
                     }))
                 })
             }

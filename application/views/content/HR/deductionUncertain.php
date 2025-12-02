@@ -153,13 +153,19 @@
 
     $(document).ready(function () {
         $('#filterLocation').select2({
-            placeholder: 'Semua',
+            placeholder: 'Pilih perusahaan',
             ajax: {
-                url: '<?= base_url("ControllerHr/getCompany"); ?>',
+                url: '<?= base_url("ControllerHr/getCompanyGenerate"); ?>',
                 dataType: 'json',
                 delay: 250,
+                data: params => ({
+                    search: params.term || '' // kirim keyword
+                }),
                 processResults: data => ({
-                    results: data.map(loc => ({ id: loc.id, text: loc.companyname }))
+                    results: data.map(loc => ({
+                        id: loc.id,
+                        text: loc.companyname + ' - ' + loc.companycode
+                    }))
                 })
             }
         });
