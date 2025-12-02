@@ -18,7 +18,7 @@
 
     .btn-primary {
         background-color: #007bff;
-        color: white;
+        color: white;+
     }
 
     .btn-primary:hover {
@@ -279,13 +279,6 @@
                                     class="text-danger">*</span></label>
                             <select id="doctorname" data-placeholder="--NONE--"></select>
                             <input hidden type="number" name="doctorid" id="doctorid">
-
-                            <!-- <label for="qty" class="form-label mt-2"><strong>QTY:</strong></label>
-                            <input type="number" name="qty" id="qty">
-
-                            <label for="beauticianid" class="form-label mt-2"><strong>THERAPIST:</strong><span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="beauticianid" id="beauticianid"> -->
                         </div>
                     </div>
                 </div>
@@ -344,7 +337,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -521,7 +513,7 @@
         $("#itemname").select2({
             width: '100%',
             ajax: {
-                url: "App/searchServices", // Panggil controller Customer
+                url: "App/searchServices",
                 dataType: "json",
                 delay: 250,
                 data: function (params) {
@@ -547,7 +539,7 @@
         $("#salesname").select2({
             width: '100%',
             ajax: {
-                url: "App/searchConsultant", // Panggil controller Customer
+                url: "App/searchConsultant",
                 dataType: "json",
                 delay: 250,
                 data: function (params) {
@@ -615,10 +607,6 @@
             e.preventDefault();
 
             let formData = $(this).serialize(); // Ambil data form
-
-
-            console.log(formData);
-
 
             $.ajax({
                 url: "<?= base_url('App/updatePaymentMethod'); ?>",
@@ -942,4 +930,7 @@
             })
         };
     }
+
+
+    
 </script>

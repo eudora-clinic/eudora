@@ -1002,7 +1002,7 @@ class MApp extends CI_Model
         	")->result_array();
 		} else if ($level == 13) {
 			return $this->db_oriskin->query("
-            select id, name from msemployee where id in (1871)
+            select id, name from msemployee where id in (1871, 1040)
         	")->result_array();
 		} else {
 			return $this->db_oriskin->query("
@@ -1013,8 +1013,6 @@ class MApp extends CI_Model
 
 	public function get_doctor_list($location_id)
 	{
-
-
 		return $this->db_oriskin->query("
             	SELECT a.id, a.name 
 				FROM msemployeeinvoice d 
