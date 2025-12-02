@@ -7027,6 +7027,148 @@ class App extends CI_Controller
 			} else {
 				echo json_encode(['success' => false, 'invoice' => $invoice]);
 			}
+		} else if ($type == 5) {
+			$query = $db_oriskin->query("SELECT 
+				a.locationsalesid AS LOCATIONID,  
+				a.id AS downpaymenthdrid, 
+				a.downpaymentno AS downpaymentno, 
+				CONVERT(varchar(10), a.downpaymentdate, 120) AS downpaymentdate,                                     
+				a.status AS STATUS, 
+				e.id AS CONSULTANTID,
+				e.name AS CONSULTANTNAME,
+				f.id AS DOCTORID,
+				f.name AS DOCTORNAME,
+                b.id AS DTLID, 
+				b.totalamount AS TOTAL, 
+				b.totalmonth AS QTY,
+				h.firstname + ' ' + h.lastname AS CUSTOMERNAME,
+				h.customercode AS CUSTOMERCODE,
+				h.id AS CUSTOMERID,
+				h.cellphonenumber AS CELLPHONENUMBER,
+				i.name AS ITEMNAME,
+				i.id AS ITEMID
+                from sldownpaymentmembershiphdr a 
+                INNER JOIN sldownpaymentmembershipdtl b ON a.id = b.id 
+                INNER JOIN msemployee e ON a.salesid = e.id
+                LEFT JOIN msemployee f ON a.doctorid = f.id
+				INNER JOIN mscustomer h ON a.customerid = h.id
+				INNER JOIN msproductmembershiphdr i ON b.productmembershiphdrid = i.id
+                WHERE downpaymentno = ?
+        		ORDER BY a.downpaymentno", [$invoice]);
+
+			$data = $query->row_array();
+
+			$queryPayment = $db_oriskin->query("SELECT 
+                c.id AS paymentid, 
+				c.paymentid AS paymenttypeid, 
+				c.amount AS amount, 
+				d.name AS paymentname, 
+				a.downpaymentno AS downpaymentno
+                FROM sldownpaymentmembershiphdr a 
+                LEFT JOIN sldownpaymentmembershippayment c ON a.id = c.downpaymenthdrid 
+                LEFT JOIN mspaymenttype d ON c.paymentid = d.id
+                WHERE downpaymentno = ? 
+				ORDER BY downpaymentno", [$invoice]);
+
+			$dataPayment = $queryPayment->result_array();
+
+			if ($data && $dataPayment) {
+				echo json_encode([
+					'success' => true,
+					'data' => [
+						'downpaymentno' => $data['downpaymentno'],
+						'status' => $data['STATUS'],
+						'amount' => $data['TOTAL'],
+						'consultantid' => $data['CONSULTANTID'],
+						'doctorid' => $data['DOCTORID'],
+						'consultantname' => $data['CONSULTANTNAME'],
+						'doctorname' => $data['DOCTORNAME'],
+						'customerid' => $data['CUSTOMERID'],
+						'customername' => $data['CUSTOMERNAME'],
+						'itemname' => $data['ITEMNAME'],
+						'itemid' => $data['ITEMID'],
+						'qty' => $data['QTY'],
+						'downpaymentdate' => $data['downpaymentdate'],
+						'downpaymenthdrid' => $data['downpaymenthdrid']
+					],
+					'dataPayment' => $dataPayment
+				]);
+			} else {
+				echo json_encode(['success' => false, 'invoice' => $invoice]);
+			}
+		} else if ($type == 6) {
+			$query = $db_oriskin->query("SELECT 
+				a.locationid AS LOCATIONID,  
+				a.id AS downpaymenthdrid, 
+				a.downpaymentno AS downpaymentno, 
+				CONVERT(varchar(10), a.downpaymentdate, 120) AS downpaymentdate,                                     
+				a.status AS STATUS, 
+				e.id AS CONSULTANTID,
+				e.name AS CONSULTANTNAME,
+				f.id AS DOCTORID,
+				f.name AS DOCTORNAME,
+                b.id AS DTLID, 
+				b.total AS TOTAL, 
+				b.qty AS QTY,
+				h.firstname + ' ' + h.lastname AS CUSTOMERNAME,
+				h.customercode AS CUSTOMERCODE,
+				h.id AS CUSTOMERID,
+				h.cellphonenumber AS CELLPHONENUMBER,
+				i.name AS ITEMNAME,
+				i.id AS ITEMID,
+				a.amount AS AMOUNTTOTAL
+                from sldownpaymentproducthdr a 
+                INNER JOIN sldownpaymentproductdtl b ON a.id = b.downpaymenthdrid 
+                INNER JOIN msemployee e ON a.salesid = e.id
+                LEFT JOIN msemployee f ON a.doctorid = f.id
+				INNER JOIN mscustomer h ON a.customerid = h.id
+				INNER JOIN msproduct i ON b.productid = i.id
+                WHERE downpaymentno = ?
+        		ORDER BY a.downpaymentno", [$invoice]);
+			$data = $query->row_array();
+
+			$dataDetail = $query->result_array();
+
+			$queryPayment = $db_oriskin->query("SELECT 
+                c.id AS paymentid, 
+				c.paymentid AS paymenttypeid, 
+				c.amount AS amount, 
+				d.name AS paymentname, 
+				a.downpaymentno AS downpaymentno
+                FROM sldownpaymentproducthdr a 
+                LEFT JOIN sldownpaymentproductpayment c ON a.id = c.downpaymenthdrid 
+                LEFT JOIN mspaymenttype d ON c.paymentid = d.id
+                WHERE downpaymentno = ? 
+				ORDER BY downpaymentno", [$invoice]);
+
+			$dataPayment = $queryPayment->result_array();
+
+			if ($data && $dataPayment) {
+				echo json_encode([
+					'success' => true,
+					'data' => [
+						'downpaymentno' => $data['downpaymentno'],
+						'status' => $data['STATUS'],
+						'amount' => $data['TOTAL'],
+						'consultantid' => $data['CONSULTANTID'],
+						'doctorid' => $data['DOCTORID'],
+						'consultantname' => $data['CONSULTANTNAME'],
+						'doctorname' => $data['DOCTORNAME'],
+						'customerid' => $data['CUSTOMERID'],
+						'customername' => $data['CUSTOMERNAME'],
+						'itemname' => $data['ITEMNAME'],
+						'itemid' => $data['ITEMID'],
+						'qty' => $data['QTY'],
+						'downpaymentdate' => $data['downpaymentdate'],
+						'downpaymenthdrid' => $data['downpaymenthdrid'],
+						'amounttotal' => $data['AMOUNTTOTAL']
+					],
+					'dataPayment' => $dataPayment,
+					'dataDetail' => $dataDetail
+				]);
+			} else {
+				echo json_encode(['success' => false, 'invoice' => $invoice]);
+			}
 		}
 	}
 	public function searchDocter()
@@ -7113,7 +7255,7 @@ class App extends CI_Controller
 			} else if ($post['type'] == 2) {
 				$db_oriskin->insert('sldownpaymentmembershippayment', $data_hdr);
 			} else if ($post['type'] == 3) {
-				$db_oriskin->insert('slinvoicepayment', $data_hdr);
+				$db_oriskin->insert('sldownpaymentproductpayment', $data_hdr);
 			}
 		}
 		if ($db_oriskin->trans_status() === FALSE) {
@@ -7159,6 +7301,53 @@ class App extends CI_Controller
 
 
 		if ($db_oriskin->update('slinvoicedtl', $update_data)) {
+			$error = $db_oriskin->error();
+			echo json_encode([
+				'status' => 'success',
+				'message' => 'Data updated successfully',
+				'error' => $update_data
+			]);
+		} else {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'Failed to update data'
+			]);
+		}
+	}
+
+	public function updateProductDownPayment()
+	{
+		error_reporting(0);
+		ini_set('display_errors', 0);
+		$post = $this->input->post();
+		$db_oriskin = $this->load->database('oriskin', true);
+
+		$idupdateProduct = $post['idupdateProduct'] ?? null;
+		$amountupdateProduct = $post['amountupdateProduct'] ?? null;
+		$updateIdProduct = $post['updateIdProduct'] ?? null;
+		$updateqtyProduct = $post['qtyupdateProduct'] ?? null;
+
+		$update_data = [
+			'productid' => $idupdateProduct,
+			'total' => $amountupdateProduct,
+			'qty' => $updateqtyProduct
+		];
+
+		if (empty($idupdateProduct) || empty($amountupdateProduct) || !$updateIdProduct || !$updateqtyProduct) {
+			echo json_encode([
+				'status' => 'error',
+				'message' => 'Invalid input data',
+				'data' => $update_data
+			]);
+			return;
+		}
+
+
+
+		$db_oriskin->where('id', $updateIdProduct);
+
+
+		if ($db_oriskin->update('sldownpaymentproductdtl', $update_data)) {
 			$error = $db_oriskin->error();
 			echo json_encode([
 				'status' => 'success',
@@ -7291,7 +7480,7 @@ class App extends CI_Controller
 				]);
 			}
 		} else if ($type == 3) {
-			if ($db_oriskin->update('slinvoicepayment', $update_data)) {
+			if ($db_oriskin->update('sldownpaymentproductpayment', $update_data)) {
 				echo json_encode([
 					'status' => 'success',
 					'message' => 'Data updated successfully'
@@ -7505,9 +7694,9 @@ class App extends CI_Controller
 		if ($type == 1) {
 			$db_oriskin->update('sldownpaymenttreatmenthdr', $update_data);
 		} else if ($type == 2) {
-			$db_oriskin->update('slinvoicemembershiphdr', $update_data);
+			$db_oriskin->update('sldownpaymentmembershiphdr', $update_data);
 		} else if ($type == 3) {
-			$db_oriskin->update('slinvoicehdr', $update_data);
+			$db_oriskin->update('sldownpaymentproducthdr', $update_data);
 		}
 
 
@@ -7642,37 +7831,38 @@ class App extends CI_Controller
 			$db_oriskin->where('downpaymenthdrid', $downpaymenthdrid);
 			$db_oriskin->update('sldownpaymenttreatmentdtl', $update_data_detail_invoicetreatment);
 		}
-		// else if ($type == 2) {
-		// 	$update_data_header_membership = [
-		// 		'invoicedate' => $post['invoicedate'],
-		// 		'salesid' => $post['salesid'],
-		// 		'customerid' => $post['customerid'],
-		// 		'invoiceno' => $post['invoiceno'],
-		// 		'doctorid' => $post['doctorid']
-		// 	];
+		else if ($type == 2) {
+			$update_data_header_membership = [
+				'downpaymentdate' => $post['downpaymentdate'],
+				'salesid' => $post['salesid'],
+				'customerid' => $post['customerid'],
+				'downpaymentno' => $post['downpaymentno'],
+				'doctorid' => $post['doctorid']
+			];
 
-		// 	$update_data_detail_membership = [
-		// 		'productmembershiphdrid' => $post['itempurchaseid'],
-		// 		'totalmonth' => $post['qty'],
-		// 		'subscriptionmonth' => $post['qty'],
-		// 		'totalamount' => $post['amount']
-		// 	];
-		// 	$db_oriskin->where('id', $invoicehdrid);
-		// 	$db_oriskin->update('slinvoicemembershiphdr', $update_data_header_membership);
+			$update_data_detail_membership = [
+				'productmembershiphdrid' => $post['itempurchaseid'],
+				'totalmonth' => $post['qty'],
+				'subscriptionmonth' => $post['qty'],
+				'totalamount' => $post['amount']
+			];
+			$db_oriskin->where('id', $downpaymenthdrid);
+			$db_oriskin->update('sldownpaymentmembershiphdr', $update_data_header_membership);
 
-		// 	$db_oriskin->where('id', $invoicehdrid);
-		// 	$db_oriskin->update('slinvoicemembershipdtl', $update_data_detail_membership);
-		// } else if ($type == 3) {
-		// 	$update_data_header_retail = [
-		// 		'invoicedate' => $post['invoicedate'],
-		// 		'salesid' => (int) $post['salesid'],
-		// 		'customerid' => (int) $post['customerid'],
-		// 		'invoiceno' => $post['invoiceno'],
-		// 		'doctorid' => !empty($post['doctorid']) ? (int) $post['doctorid'] : null
-		// 	];
-		// 	$db_oriskin->where('id', $invoicehdrid);
-		// 	$db_oriskin->update('slinvoicehdr', $update_data_header_retail);
-		// }
+			$db_oriskin->where('id', $downpaymenthdrid);
+			$db_oriskin->update('sldownpaymentmembershipdtl', $update_data_detail_membership);
+		} 
+		else if ($type == 3) {
+			$update_data_header_retail = [
+				'downpaymentdate' => $post['downpaymentdate'],
+				'salesid' => (int) $post['salesid'],
+				'customerid' => (int) $post['customerid'],
+				'downpaymentno' => $post['downpaymentno'],
+				'doctorid' => !empty($post['doctorid']) ? (int) $post['doctorid'] : null
+			];
+			$db_oriskin->where('id', $downpaymenthdrid);
+			$db_oriskin->update('sldownpaymentproducthdr', $update_data_header_retail);
+		}
 
 		if ($db_oriskin->trans_status() === FALSE) {
 			$error = $db_oriskin->error();
