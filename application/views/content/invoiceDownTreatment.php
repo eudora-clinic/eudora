@@ -3,7 +3,6 @@
         font-weight: bold;
     }
 
-    /* Styling untuk tombol */
     button {
         padding: 5px 10px;
         border-radius: 5px;
@@ -85,321 +84,844 @@
             font-size: 16px;
         }
     }
+
+
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .form-column {
+        flex: 1;
+        min-width: 250px;
+        /* Biar responsif */
+    }
+
+    /* Label styling */
+    .form-label {
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        display: block;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 5px;
+        transition: all 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    input[type="number"]:focus,
+    select:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+    }
+
+    /* Styling untuk textarea */
+    textarea {
+        resize: vertical;
+        /* Bisa diubah ukurannya */
+        min-height: 100px;
+    }
+
+    /* Styling untuk select dropdown */
+    select {
+        background: #fff;
+        cursor: pointer;
+    }
+
+    /* Untuk tombol disabled */
+    input[disabled] {
+        background: #f5f5f5;
+        color: #777;
+    }
+
+    /* Style pada select2 input (tampilan utama dropdown) */
+    .select2-container--default .select2-selection--single {
+        width: 100% !important;
+        padding: 13px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 5px;
+        transition: all 0.3s;
+        height: auto;
+        /* agar padding berfungsi dengan baik */
+        display: flex;
+        align-items: center;
+    }
+
+    /* Style pada teks yang ditampilkan di dropdown */
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        font-size: 14px;
+        line-height: normal;
+    }
+
+    /* Style pada panah dropdown */
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 100%;
+    }
+
+    #tbl-payment td:nth-child(1),
+    #tbl-payment td:nth-child(2),
+    #tbl-payment td:nth-child(3) {
+        text-align: center;
+    }
+
+
+    /* Styling untuk Mobile */
+    @media (max-width: 768px) {
+        .form-row {
+            flex-direction: column;
+        }
+    }
 </style>
-<div class="">
-    <div class="card p-2 col-md-6">
-        <form id="form-cari-invoice" method="get" action="<?= current_url() ?>">
+
+
+<body>
+    <div class="mycontaine">
+        <div class="card p-2 col-md-4">
             <div class="row g-3" style="display: flex; align-items: center;">
                 <div class="col-md-9">
                     <div class="form-group">
-                        <input type="text" id="nodownpayment" name="nodownpayment" class="form-control" required="true" aria-required="true" placeholder="Masukkan Invoice DP Treatment" value="<?= (isset($_GET['nodownpayment']) ? $_GET['nodownpayment'] : '') ?>">
+                        <input type="text" id="nodownpayment" name="nodownpayment" class="form-control" required="true"
+                            aria-required="true" placeholder="Masukkan Invoice DP Treatment">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="form-group">
-                        <button type="submit" id="btn-cari" name="submit" class="btn btn-sm top-responsive  btn-primary" value="true">Search</button>
+                        <button type="submit" id="btn-cari" name="submit" class="btn btn-sm top-responsive  btn-primary"
+                            value="true" onclick="searchInvoice()">Search</button>
                     </div>
                 </div>
             </div>
-        </form>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header">
-                <h5 class="card-header card-header-info" style=" font-weight: bold; color: #666666; font-size: 14px !important; text-transform: uppercase;">Edit Data Invoice Down Payment Treatment</h5>
-                </div>
-                <div class="card-body">
-                    <div id="result" style="display: <?= (isset($_GET['submit']) ? 'block;' : 'none;') ?>">
-                        <?php
-                        # dibuat langsung di view untuk memudahkan 
-                        # tidak dibuat di model
-                        if (isset($_GET['submit'])) {
-                            $nodownpayment = $this->input->get('nodownpayment');
-                            # load database oriskin (lihat di config/database.php)
-                            $db_oriskin = $this->load->database('oriskin', true);
-                            # query
-                            $query = $db_oriskin->query("SELECT a.locationid as LOCATIONID,  a.id, a.downpaymentno as INVOICENO, a.downpaymentdate as INVOICEDATE, 
-                                                                a.status as STATUS, e.id as CONSULTANTID, e.name as CNAME,  
-                                                                b.id as DTLID, b.total as TOTAL, b.qty as QTY
-                                                        from sldownpaymenttreatmenthdr a 
-                                                        inner join sldownpaymenttreatmentdtl b on a.id = b.downpaymenthdrid 
-                                                        inner join msemployee e on a.salesid = e.id
-                                                        where downpaymentno = '" . $nodownpayment . "' order by downpaymentno");
+        </div>
 
-                            $queryPayment = $db_oriskin->query("SELECT 
-                                    c.id as INVPAYID, c.paymentid as PAYMENTID, c.amount as AMOUNT, d.name as PAYMENTNAME, a.downpaymentno as INVOICENO
-                                    from sldownpaymenttreatmenthdr a 
-                                    left join sldownpaymenttreatmentpayment c on a.id = c.downpaymenthdrid 
-                                    left join mspaymenttype d on c.paymentid = d.id
-                                    where downpaymentno = '" . $nodownpayment . "' order by downpaymentno");
+        <div class="disabled" id="container-information-button">
+            <button type="button" class="btn btn-sm btn-primary" onclick="updateInvoice()"
+                style="background-color: #c49e8f; color: black;">UPDATE</button>
 
-                            if ($query->num_rows() <= 0) {
-                                echo '<div class="alert alert-danger">
-												<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-													<i class="material-icons">close</i>
-												</button>
-												<span>No. Invoice <strong>' . $nodownpayment . '</strong> tidak ditemukan</span>
-											</div>';
-                            } else {
-                                $header = $query->result_array();
-                                $headerPayment = $queryPayment->result_array();
-                                //$detail = $db_oriskin->query("select * from slinvoicemembershiphdr where invoiceno like '%".$no_invoice."%'");
+            <button id="btnStatusInvoiceVoid" type="button" class="btn btn-sm btn-primary"
+                onclick="updateStatusInvoice(3)" style="background-color: #c49e8f; color: black;">VOID</button>
 
-                                $employee = $db_oriskin->query("SELECT a.id as ID, a.name as NAME
-                                from msemployee a inner join msemployeedetail b on a.id = b.employeeid
-                                where b.locationid = '" . $header[0]['LOCATIONID'] . "' and a.isactive = 1 order by a.id")->result_array();
-                            }
-                        }
-                        ?>
-                        <h5>HEADER</h5>
-                        <div class="table-wrapper">
-                            <div class="material-datatables">
-                                <table id="dt-invoice-membership" class="table table-bordered" cellspacing="0" width="100%" role="grid">
-                                    <thead class="bg-thead">
-                                        <tr role="" style="text-align: center;">
-                                            <th style="text-align: center;">downpayment No</th>
-                                            <th style="text-align: center;">TOTAL</th>
-                                            <th style="text-align: center;">Invoice Date</th>
-                                            <th style="text-align: center;">Status</th>
-                                            <th style="text-align: center;">consultant</th>
-                                            <th style="text-align: center;">Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php if (isset($header)) {
-                                            foreach ($header as $v) { ?>
-                                                <tr>
-                                                    <td class="text-center">
-                                                        <span id="sp-invoiceno-<?= $v['id'] ?>"><?= $v['INVOICENO'] ?></span>
-                                                        <input type="text" id="invoiceno-<?= $v['id'] ?>" value="<?= $v['INVOICENO'] ?>" style="width: 100%; display: none;">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span><?= $v['TOTAL'] ?></span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span id="sp-invoicedate-<?= $v['id'] ?>"><?= $v['INVOICEDATE'] ?></span>
-                                                        <input type="date" id="invoicedate-<?= $v['id'] ?>" value="<?= date('Y-m-d', strtotime($v['INVOICEDATE'])) ?>" style="width: 100%; display: none;">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span id="sp-status-<?= $v['id'] ?>"><?= $v['STATUS'] ?></span>
-                                                        <input type="text" id="status-<?= $v['id'] ?>" value="<?= $v['STATUS'] ?>" style="width: 100%; display: none;">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <span id="sp-consultant-<?= $v['id'] ?>"><?= $v['CNAME'] ?></span>
-                                                        <select id="consultant-<?= $v['id'] ?>" class="form-control" style="display: none;">
-                                                            <option value="">Pilih Consultant</option>
-                                                            <?php foreach ($employee as $e) { ?>
-                                                                <option value="<?= $e['ID'] ?>" <?= ($e['ID'] == $v['CONSULTANTID']) ? 'selected' : '' ?>><?= $e['NAME'] ?></option>
-                                                            <?php } ?>
-                                                        </select>
-                                                    </td>
-                                             
-                                                    <td class="text-center">
-                                                        <button id="btn-edit-header-<?= $v['id'] ?>" class="btn btn-sm btn-primary" onclick="editHeader('<?= $v['id'] ?>');"><i class="material-icons">edit</i> Edit</button>
-                                                        <button id="btn-save-header-<?= $v['id'] ?>" class="btn btn-sm btn-success" onclick="saveHeader('<?= $v['id'] ?>');" style="display: none;"><i class="material-icons">save</i> Save</button>
-                                                    </td>
-                                                </tr>
-                                        <?php }
-                                        } ?>
-                                    </tbody>
-                                </table>
-                            </div>
+            <button id="btnStatusInvoiceActive" type="button" class="btn btn-sm btn-primary"
+                onclick="updateStatusInvoice(10)" style="background-color: #c49e8f; color: black;">ACTIVE</button>
+
+            <!-- <button type="button" class="btn btn-sm btn-primary" onclick="upgradeInvoice()"
+                style="background-color: #c49e8f; color: black;">UPGRADE</button> -->
+        </div>
+
+        <div class="disabled" id="container-information">
+            <div class="mt-2" id="role-information">
+                <div class="card p-4">
+                    <div class="form-row">
+                        <div class="form-column">
+                            <label for="name" class="form-label mt-2"><strong>CUSTOMER:</strong><span
+                                    class="text-danger">*</span></label>
+                            <select id="customer-name" data-placeholder="--NONE--"></select>
+                            <input hidden type="number" name="customerid" id="customerid">
+                            <input hidden type="number" name="downpaymenthdrid" id="downpaymenthdrid">
+
+                            <label for="downpaymentno" class="form-label mt-2"><strong>INVOICE:</strong><span
+                                    class="text-danger">*</span></label>
+                            <input type="text" name="downpaymentno" id="downpaymentno">
+
+                            <label for="salesid" class="form-label mt-2"><strong>CONSULTANT:</strong><span
+                                    class="text-danger">*</span></label>
+                            <select id="salesname" data-placeholder="--NONE--"></select>
+                            <input hidden type="number" name="salesid" id="salesid">
                         </div>
 
-                        <?php if ($headerPayment[0]['INVPAYID'] != NULL) { ?>
-                            <h5>PAYMENT</h5>
-                            <div class="table-wrapper">
-                                <div class="material-datatables">
-                                    <!--<table id="dt-realisasi" class="table table-striped table-no-bordered table-hover dataTable dtr-inline" cellspacing="0" width="100%" role="grid">-->
-                                    <table id="payment-invoice-membership" class="table table-bordered" cellspacing="0" width="100%" role="grid">
-                                        <thead class="bg-thead">
-                                            <tr role="">
-                                                <th style="text-align: center;">ID</th>
-                                                <th style="text-align: center;">downpayment No</th>
-                                                <th style="text-align: center;">payment</th>
-                                                <th style="text-align: center;">amount</th>
-                                                <th style="text-align: center;">action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php if (isset($headerPayment)) : ?>
-                                                <?php foreach ($headerPayment as $v) : ?>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <span id="SP-INVOICENO-ID<?= $v['INVPAYID'] ?>"><?= $v['INVPAYID'] ?></span>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <span id="SP-INVOICENO-PAYMENT<?= $v['INVPAYID'] ?>"><?= $v['INVOICENO'] ?></span>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <span id="SP-PAYMENTID-PAYMENT<?= $v['INVPAYID'] ?>"><?= $v['PAYMENTNAME'] ?></span>
-                                                            <span id="SP-PAYMENTID-PAYMENT<?= $v['INVPAYID'] ?>" style="width: 100%; display: none;"><?= $v['PAYMENTID'] ?></span>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <span id="SP-AMOUNT-PAYMENT<?= $v['INVPAYID'] ?>"><?= $v['AMOUNT'] ?></span>
-                                                            <input type="number" id="AMOUNT-PAYMENT<?= $v['INVPAYID'] ?>" value="<?= $v['AMOUNT'] ?>" style="width: 100%; display: none;">
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <button id="BTN-EDIT-HEADER-PAYMENT<?= $v['INVPAYID'] ?>" class="btn btn-sm btn-primary" onclick="editHeaderPayment('<?= $v['INVPAYID'] ?>', '<?= $v['PAYMENTID'] ?>');">
-                                                                <i class="material-icons">edit</i> Edit Header
-                                                            </button>
-                                                            <button id="BTN-SAVE-HEADER-PAYMENT<?= $v['INVPAYID'] ?>" class="btn btn-sm btn-success" onclick="saveHeaderPayment('<?= $v['INVPAYID'] ?>');" style="display: none;">
-                                                                <i class="material-icons">save</i> Save Header
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                <?php endforeach; ?>
-                                            <?php endif; ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        <?php } ?>
+                        <div class="form-column">
+                            <label for="status" class="form-label mt-2"><strong>STATUS:</strong><span
+                                    class="text-danger">*</span></label>
+                            <select disabled id="status" name="status" class="" required="true" aria-required="true">
+                                <option value="">--NONE--</option>
+                                <option value="3">Void</option>
+                                <option value="9">Upgraded</option>
+                                <option value="10">Active (Down Paymnt)</option>
+                                <option value="11">Lunas (Down Paymnt)</option>
+                            </select>
+
+                            <label for="itemname" class="form-label mt-2"><strong>ITEM:</strong><span
+                                    class="text-danger">*</span></label>
+                            <select id="itemname" data-placeholder="--NONE--"></select>
+                            <input hidden type="number" name="itempurchaseid" id="itempurchaseid">
+
+
+
+                        </div>
+
+                        <div class="form-column">
+                            <label for="amount" class="form-label mt-2"><strong>AMOUNT:</strong></label>
+                            <input type="number" name="amount" id="amount">
+
+                            <label for="qty" class="form-label mt-2"><strong>QTY:</strong></label>
+                            <input type="number" name="qty" id="qty">
+                        </div>
+
+                        <div class="form-column">
+                            <label for="downpaymentdate" class="form-label mt-2"><strong>PURCHASEDATE:</strong></label>
+                            <input type="date" name="downpaymentdate" id="downpaymentdate">
+
+                            <label for="doctorid" class="form-label mt-2"><strong>DOCTER:</strong><span
+                                    class="text-danger">*</span></label>
+                            <select id="doctorname" data-placeholder="--NONE--"></select>
+                            <input hidden type="number" name="doctorid" id="doctorid">
+                        </div>
                     </div>
                 </div>
-                <!-- end content-->
             </div>
-            <!--  end card  -->
+
+            <div class="table-wrapper card">
+                <div class="p-4">
+                    <div class="mt-2">
+                        <h6 class="text-secondary mb-2 mt-2">
+                            <i class="bi bi-wallet2"></i> PAYMENT METHOD
+                        </h6>
+                        <table id="tbl-payment" class="table table-bordered payment-list">
+                            <thead class="bg-thead">
+                                <tr>
+                                    <th style="font-size: 12px; text-align: center;">METHOD</th>
+                                    <th style="font-size: 12px; text-align: center;">AMOUNT</th>
+                                    <th style="font-size: 12px; text-align: center;">ACT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-wrapper product-table-wrapper card">
+                <div class="p-4">
+                    <div class="items mt-2">
+                        <h6 class="text-secondary mb-2 mt-2">
+                            <i class="bi bi-wallet2"></i> + PAYMENT METHOD
+                        </h6>
+                        <table id="tbl-items" class="table table-bordered items-list">
+                            <thead class="bg-thead">
+                                <tr>
+                                    <th style="font-size: 12px; text-align: center;">METHOD</th>
+                                    <th style="font-size: 12px; text-align: center;">AMOUNT</th>
+                                    <th style="font-size: 12px; text-align: center;">ACT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <button class="btn btn-primary btn-sm add-items">
+                                <i class="bi bi-plus-circle"></i> + PAYMENT
+                            </button>
+
+                            <button class="btn btn-primary btn-sm" onclick="addPaymentMethod()">
+                                <i class="bi bi-plus-circle"></i> SIMPAN
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- end col-md-12 -->
     </div>
-    <!-- end row -->
-</div>
-<script>
-    _mod = '<?= $mod ?>';
 
-    function editHeader(id) {
-        console.log(id);
+    <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
 
-        document.getElementById('sp-invoicedate-' + id).style.display = 'none';
-        document.getElementById('invoicedate-' + id).style.display = 'block';
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">UPDATE PAYMENT</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-        document.getElementById('sp-status-' + id).style.display = 'none';
-        document.getElementById('status-' + id).style.display = 'block';
+                <div class="modal-body">
+                    <form id="updateForm">
+                        <div class="form-group row">
+                            <label for="paymentMethodUpdate" class="col-sm-4 col-form-label">PAYMENTMENTOD</label>
+                            <div class="col-sm-8">
+                                <select id="paymentMethodUpdate" name="paymentMethodUpdate" class="form-control"
+                                    required>
+                                    <option value="">-NONE-</option>
+                                    <?php foreach ($payment_list as $j) { ?>
+                                        <option value="<?= $j['id'] ?>"><?= $j['name'] ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-4">
+                                <label for="amountupdate">AMOUNT</label>
+                            </div>
 
-        document.getElementById('sp-consultant-' + id).style.display = 'none';
-        document.getElementById('consultant-' + id).style.display = 'block';
+                            <div class="col-sm-8">
+                                <input type="number" name="amountupdate" id="amountupdate" class="form-control"
+                                    style="border: 1px solid #ced4da; border-radius: 6px; padding: 10px 12px; font-size: 16px; box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1); transition: border-color 0.3s, box-shadow 0.3s;"
+                                    placeholder="Amount">
+                            </div>
+                        </div>
+                        <input type="hidden" id="updateId" name="updateId">
+                        <input type="number" hidden id="type" name="type" value="1">
 
-        document.getElementById('btn-edit-header-' + id).style.display = 'none';
-        document.getElementById('btn-save-header-' + id).style.display = 'inline-block';
-    }
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
 
-    function saveHeader(id) {
-        let salesid = document.getElementById('consultant-' + id).value;
-        let status = document.getElementById('status-' + id).value;
-        let invoicedate = document.getElementById('invoicedate-' + id).value;
+            </div>
+        </div>
+    </div>
 
-        $.ajax({
-            url: "<?= base_url('App/updateInvoiceHdr') ?>", // Sesuaikan dengan route Anda
-            type: "POST",
-            data: {
-                id: id,
-                salesid: salesid,
-                status: status,
-                invoicedate: invoicedate,
-                type: 4
-            },
-            dataType: "json",
-            success: function(response) {
-                console.log(response);
-
-                if (response.success) {
-                    alert("Data berhasil diperbarui!");
-                    location.reload();
-                } else {
-                    alert("Gagal memperbarui data!");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.log(xhr.responseText);
-                alert("Terjadi kesalahan saat memperbarui data.");
-            }
-        });
-    }
-</script>
+</body>
 
 <script>
-    $(document).ready(function() {
-        $('#dt-invoice-membership').DataTable({
-            "paging": false, // Menghilangkan pagination
-            "searching": false, // Menghilangkan fitur pencarian
-            "info": false, // Menghilangkan informasi jumlah data
-            "ordering": false,
-            "bAutoWidth": false
-        });
+    document.addEventListener("DOMContentLoaded", function () {
+        const newTable = document.querySelector(".product-table-wrapper");
+        newTable.querySelector(".add-items").addEventListener("click", function () {
+            const itemList = newTable.querySelector("#tbl-items tbody");
+            const itemHtml = `
+                            <tr>
+                                <td style="text-align: center;">
+                                    <select class="form-control itemsid">
+                                    </select>
+                                </td>
+                                <td style="text-align: center;">
+                                    <input value="0" type="number" class="form-control price">
+                                </td>
+                                <td style="text-align: center;">
+                                    <button class="btn btn-danger btn-sm remove-items">DELETE</button>
+                                </td>
+                            </tr>
+                            `;
 
-        $('#payment-invoice-membership').DataTable({
-            "paging": false, // Menghilangkan pagination
-            "searching": false, // Menghilangkan fitur pencarian
-            "info": false, // Menghilangkan informasi jumlah data
-            "ordering": false,
-            "bAutoWidth": false
+            itemList.insertAdjacentHTML("beforeend", itemHtml);
+            const lastItems = itemList.lastElementChild;
+            const selectElement = $(lastItems).find(".itemsid");
+
+            selectElement.select2({
+                placeholder: "Pilih Item",
+                allowClear: true,
+                width: "100%",
+                ajax: {
+                    url: "App/searchPaymentMethod",
+                    dataType: "json",
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            search: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        return {
+                            results: data.map(item => ({
+                                id: item.id,
+                                text: item.text,
+                            }))
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2
+            });
+
+            selectElement.on("select2:select", function (e) {
+                const selectedData = e.params.data;
+            });
+
+            lastItems.querySelector(".remove-items").addEventListener("click", function () {
+                lastItems.remove();
+            });
         });
     });
-</script>
 
-<script>
-    function editHeaderPayment(id, selectedPaymentId) {
-        $("#SP-PAYMENTID-PAYMENT" + id).hide();
-        $("#SP-AMOUNT-PAYMENT" + id).hide();
-        $("#BTN-EDIT-HEADER-PAYMENT" + id).hide();
-        $("#BTN-SAVE-HEADER-PAYMENT" + id).show();
+    $(document).ready(function () {
+        $("#customer-name").select2({
+            width: '100%',
+            ajax: {
+                url: "App/searchCustomer", // Panggil controller Customer
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    }; // Kirimkan keyword pencarian
+                },
+                processResults: function (data) {
+                    console.log(data);
 
-        // Ambil daftar payment type dari mspaymenttype
-        $.ajax({
-            url: "<?= base_url('App/getPaymentTypes') ?>",
-            type: "GET",
-            dataType: "json",
-            success: function(response) {
-                let selectHtml = '<select id="PAYMENTID-PAYMENT' + id + '" class="form-control">';
-                response.forEach(function(payment) {
-                    let selected = (payment.id == selectedPaymentId) ? 'selected' : '';
-                    selectHtml += '<option value="' + payment.id + '" ' + selected + '>' + payment.name + '</option>';
-                });
-                selectHtml += '</select>';
-                $("#SP-PAYMENTID-PAYMENT" + id).after(selectHtml);
-            }
-        });
-
-        $("#AMOUNT-PAYMENT" + id).show();
-    }
-
-    function saveHeaderPayment(id) {
-        let paymentType = $("#PAYMENTID-PAYMENT" + id).val();
-        let amount = $("#AMOUNT-PAYMENT" + id).val();
-
-        console.log(paymentType, id, amount);
-
-
-        $.ajax({
-            url: "<?= base_url('App/updatePayment') ?>",
-            type: "POST",
-            data: {
-                id: id,
-                paymentType: paymentType,
-                amount: amount,
-                type: 4
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
             },
-            success: function(response) {
-                console.log(response);
-                
-                alert("Data berhasil diperbarui!");
-                location.reload();
+            minimumInputLength: 2
+        });
+
+        $("#customer-name").on("select2:select", function (e) {
+            let data = e.params.data;
+            $("#customerid").val(data.id);
+        });
+
+
+        $("#paymentnameupdate").select2({
+            width: '100%',
+            ajax: {
+                url: "App/searchPaymentMethod", // Panggil controller Customer
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    }; // Kirimkan keyword pencarian
+                },
+                processResults: function (data) {
+                    console.log(data);
+
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2
+        });
+
+        $("#paymentnameupdate").on("select2:select", function (e) {
+            let data = e.params.data;
+            $("#paymentidupdate").val(data.id);
+        });
+
+
+        $("#itemname").select2({
+            width: '100%',
+            ajax: {
+                url: "App/searchServices",
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2
+        });
+
+        $("#itemname").on("select2:select", function (e) {
+            let data = e.params.data;
+            $("#itempurchaseid").val(data.id);
+        });
+
+        $("#salesname").select2({
+            width: '100%',
+            ajax: {
+                url: "App/searchConsultant",
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2
+        });
+
+        $("#salesname").on("select2:select", function (e) {
+            let data = e.params.data;
+            $("#salesid").val(data.id);
+        });
+
+
+        $("#doctorname").select2({
+            width: '100%',
+            ajax: {
+                url: "App/searchDocter", // Panggil controller Customer
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        search: params.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                },
+                cache: true
+            },
+            minimumInputLength: 2
+        });
+
+        $("#doctorname").on("select2:select", function (e) {
+            let data = e.params.data;
+            $("#doctorid").val(data.id);
+        });
+
+        $(document).on('click', '.update-btn', function () {
+            let id = $(this).data('id');
+            let paymentamount = $(this).data('payment-amount');
+            let paymentid = $(this).data('payment-id');
+
+            $('#updateId').val(id);
+            $('#paymentMethodUpdate').val(paymentid);
+            $('#amountupdate').val(paymentamount);
+
+            $('#updateModal').modal('show');
+        });
+
+        $('#updateForm').on('submit', function (e) {
+            e.preventDefault();
+
+            let formData = $(this).serialize();
+
+            $.ajax({
+                url: "<?= base_url('App/updatePaymentMethodDownPayment'); ?>",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (response) {
+                    if (response.status === 'success') {
+                        $('#updateModal').modal('hide');
+                        searchInvoice()
+                    } else {
+                        alert(response.message || 'Error updating data');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating data:", error);
+                    alert("Terjadi kesalahan saat menyimpan data.");
+                }
+            });
+        });
+
+
+        $('#tbl-payment tbody').on('click', '.delete-btn', function () {
+            let invoicepaymentid = $(this).data("id");
+
+            console.log(invoicepaymentid, 'delete-btn');
+
+            if (confirm("Yakin menghapus payment method?")) {
+                $.ajax({
+                    url: "<?= base_url('App/deletePaymentMethodDownPayment'); ?>",
+                    type: "POST",
+                    data: {
+                        id: invoicepaymentid,
+                        type: 1
+                    },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.status === "success") {
+                            searchInvoice()
+                        } else {
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Gagal menghapus data!");
+                    }
+                });
             }
         });
-    }
-</script>
+    });
 
-<script>
-  window.addEventListener("DOMContentLoaded", function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const invoiceNo = urlParams.get('invoice');
+    let table = $('#tbl-payment').DataTable({
+        "paging": false,
+        "searching": false,
+        "info": false,
+        "ordering": false,
+        "bAutoWidth": false
+    });
 
-    if (invoiceNo) {
-      document.getElementById('nodownpayment').value = invoiceNo;
-      
-      document.getElementById('btn-cari').click();
+
+    function searchInvoice() {
+        let invoice = $('#nodownpayment').val();
+
+        if (!invoice) {
+            alert('Nomor invoice tidak boleh kosong!');
+            return;
+        }
+
+        const data = {
+            invoice,
+            type: 4
+        }
+        $.ajax({
+            url: "<?= base_url('App/search_invoice') ?>",
+            method: 'GET',
+            data: data,
+            dataType: 'json',
+            beforeSend: function () {
+                $('#btn-cari').prop('disabled', true).text('Searching...');
+            },
+            success: function (response) {
+                if (response.success) {
+                    $('#container-information').removeClass('disabled');
+                    $('#container-information-button').removeClass('disabled');
+                    $('#customer-name').append(
+                        new Option(response.data.customername, response.data.customerid, true, true)
+                    ).trigger('change');
+
+                    $('#itemname').append(
+                        new Option(response.data.itemname, response.data.itemid, true, true)
+                    ).trigger('change')
+
+                    $('#salesname').append(
+                        new Option(response.data.consultantname, response.data.consultantid, true, true)
+                    ).trigger('change')
+
+                    if (response.data.doctorid) {
+                        $('#doctorname').append(
+                            new Option(response.data.doctorname, response.data.doctorid, true, true)
+                        ).trigger('change')
+                        $('#doctorid').val(response.data.doctorid);
+                    }
+
+                    if (response.data.status == 10 || response.data.status == 11) {
+                        $('#btnStatusInvoiceActive').hide();
+                        $('#btnStatusInvoiceVoid').show();
+                    } else {
+                        $('#btnStatusInvoiceActive').show();
+                        $('#btnStatusInvoiceVoid').hide();
+                    }
+
+                    $('#customerid').val(response.data.customerid);
+
+                    $('#itempurchaseid').val(response.data.itemid);
+
+                    $('#salesid').val(response.data.consultantid);
+
+                    $('#downpaymentno').val(response.data.downpaymentno);
+                    $('#downpaymentdate').val(response.data.downpaymentdate);
+                    $('#qty').val(response.data.qty);
+                    $('#status').val(response.data.status);
+                    $('#amount').val(response.data.amount);
+                    $('#downpaymenthdrid').val(response.data.downpaymenthdrid);
+
+                    table.clear();
+
+                    let dataSet = [];
+
+                    response.dataPayment.forEach(function (row) {
+
+                        editBtn = `<button class="btn btn-primary btn-sm update-btn text-center" data-payment-amount="${row.amount}" data-id="${row.paymentid}" data-payment-id="${row.paymenttypeid}">EDIT</button>`;
+                        deleteBtn = `<button class="btn btn-danger btn-sm delete-btn text-center" data-id="${row.paymentid}">DELETE</button>`;
+
+                        dataSet.push([
+                            `<td style="text-align: center" class="text-center">${row.paymentname}</td>`,
+                            `<td style="text-align: center" class="text-center">${row.amount}</td>`,
+                            `<td style="text-align: center" class="text-center">${editBtn} ${deleteBtn}</td>`,
+                        ]);
+                    });
+
+                    table.rows.add(dataSet).draw();
+
+                    if (response.length > 0) {
+                        $("#tbl-payment").removeClass("hidden-save");
+                    } else {
+                        $("#tbl-payment").addClass("hidden-save");
+                    }
+
+
+                } else {
+                    alert('Invoice tidak ditemukan.');
+                }
+            },
+            error: function () {
+                alert('Terjadi kesalahan saat mengambil data invoice.');
+            },
+            complete: function () {
+                $('#btn-cari').prop('disabled', false).text('Search');
+            }
+        });
+    };
+
+    function addPaymentMethod() {
+        const downpaymenthdrid = document.getElementById('downpaymenthdrid').value;
+        let hasError = false;
+        if (!downpaymenthdrid) {
+            alert('Terjadi kesalahan silahkan di refresh atau login ulang!');
+            return false;
+        }
+
+        const selectedPrepaid = [];
+        document.querySelectorAll('.product-table-wrapper').forEach(wrapper => {
+            const itemsid = wrapper.querySelector('.itemsid').value;
+            const price = wrapper.querySelector('.price').value;
+
+
+            if (!itemsid || !price) {
+                alert('Terjadi kesalahan silahkan di refresh atau login ulang!');
+                return false;
+            }
+
+            selectedPrepaid.push({
+                itemsid,
+                price
+            });
+        });
+
+        if (selectedPrepaid.length === 0) {
+            alert('Payment method dan harus diisi!');
+            hasError = true;
+        }
+
+        const transactionData = {
+            downpaymenthdrid,
+            type: 1,
+            prepaid: selectedPrepaid
+        };
+
+        if (hasError) {
+            return false;
+        }
+
+        if (confirm("Yakin menambah metode?!")) {
+            $.ajax({
+                url: "<?= base_url() . 'App/saveAddPaymentMethodDownPayment' ?>",
+                type: 'POST',
+                data: JSON.stringify(transactionData),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    searchInvoice()
+                    const itemList = document.querySelector("#tbl-items tbody");
+                    itemList.innerHTML = "";
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', status, error);
+                    alert('Terjadi kesalahan saat mengirim data.');
+                }
+            })
+
+        }
+
     }
-  });
+
+
+    function updateStatusInvoice(status) {
+        const downpaymenthdrid = document.getElementById('downpaymenthdrid').value;
+        let hasError = false;
+        if (!downpaymenthdrid) {
+            alert('Terjadi kesalahan silahkan di refresh atau login ulang!');
+            return false;
+        }
+
+        const transactionData = {
+            downpaymenthdrid,
+            type: 1,
+            status
+        };
+
+        if (hasError) {
+            return false;
+        }
+
+        if (confirm("Yakin menambah metode?!")) {
+            $.ajax({
+                url: "<?= base_url() . 'App/updateStatusInvoiceDownPayment' ?>",
+                type: 'POST',
+                data: JSON.stringify(transactionData),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    searchInvoice()
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', status, error);
+                    alert('Terjadi kesalahan saat mengirim data.');
+                }
+            })
+        };
+    }
+
+    function updateInvoice() {
+        const downpaymenthdrid = document.getElementById('downpaymenthdrid').value;
+        const customerid = document.getElementById('customerid').value;
+        const downpaymentno = document.getElementById('downpaymentno').value;
+        const salesid = document.getElementById('salesid').value;
+        const itempurchaseid = document.getElementById('itempurchaseid').value;
+
+
+        const amount = document.getElementById('amount').value;
+        const qty = document.getElementById('qty').value;
+        const downpaymentdate = document.getElementById('downpaymentdate').value;
+        const doctorid = document.getElementById('doctorid').value;
+
+
+        let hasError = false;
+        if (!downpaymenthdrid || !customerid || !downpaymentno || !salesid || !itempurchaseid || !amount
+            || !qty || !downpaymentdate
+        ) {
+            alert('Terjadi kesalahan silahkan di refresh atau login ulang!');
+            return false;
+        }
+
+        const transactionData = {
+            downpaymenthdrid,
+            type: 1,
+            status,
+            customerid,
+            downpaymentno,
+            salesid,
+            itempurchaseid,
+            amount,
+            qty,
+            downpaymentdate,
+            doctorid
+        };
+
+        if (hasError) {
+            return false;
+        }
+
+        if (confirm("Yakin update invoice?!")) {
+            $.ajax({
+                url: "<?= base_url() . 'App/updateDownpaymentInvoice' ?>",
+                type: 'POST',
+                data: JSON.stringify(transactionData),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (response) {
+                    searchInvoice()
+                },
+                error: function (xhr, status, error) {
+                    console.error('AJAX error:', status, error);
+                    alert('Terjadi kesalahan saat mengirim data.');
+                }
+            })
+        };
+    }
+
 </script>
