@@ -95,7 +95,8 @@
     <div class="">
         <button type="button" class="btn btn-primary" onclick="updatePackage(<?= $detail['ID'] ?>, 1)"
             style="background-color: #c49e8f; color: black;">UPDATE</button>
-        <a href="https://sys.eudoraclinic.com:84/app/packageList" type="button" class="btn btn-primary" style="background-color: #c49e8f; color: black;">BACK</a>
+        <a href="https://sys.eudoraclinic.com:84/app/packageList" type="button" class="btn btn-primary"
+            style="background-color: #c49e8f; color: black;">BACK</a>
     </div>
     <div class="mycontaine">
         <div class="hidden mt-2" id="role-information">
@@ -120,8 +121,10 @@
                     </div>
 
                     <div class="form-column">
-                        <label for="name" class="form-label mt-2"><strong>APPS NAME:</strong><span class="text-danger">*</span></label>
-                        <input type="text" name="apps_name" id="apps_name" value="<?= isset($detail['apps_name']) ? $detail['apps_name'] : '' ?>">
+                        <label for="name" class="form-label mt-2"><strong>APPS NAME:</strong><span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="apps_name" id="apps_name"
+                            value="<?= isset($detail['apps_name']) ? $detail['apps_name'] : '' ?>">
                         <label for="isactive" class="form-label mt-2"><strong>PUBLISHED:</strong><span
                                 class="text-danger">*</span></label>
                         <select id="isactive" name="isactive" class="" required="true" aria-required="true">
@@ -134,9 +137,12 @@
                     </div>
                 </div>
                 <div class="row m-2">
-                    <label for="image" class="form-label mt-2"><strong>IMAGE:</strong><span class="text-danger">*</span></label>
+                    <label for="image" class="form-label mt-2"><strong>IMAGE:</strong><span
+                            class="text-danger">*</span></label>
                     <div class="col-md-12 text-center">
-                        <img id="previewImage" src="<?= isset($detail['image']) ? $detail['image'] : '' ?>" alt="Preview" class="img-fluid rounded border mb-2" style="max-height:250px; object-fit:contain;"> 
+                        <img id="previewImage" src="<?= isset($detail['image']) ? $detail['image'] : '' ?>"
+                            alt="Preview" class="img-fluid rounded border mb-2"
+                            style="max-height:250px; object-fit:contain;">
                         <input type="file" class="form-control" name="image" id="imageInput" accept="image/*">
                     </div>
                 </div>
@@ -233,11 +239,11 @@
     </div>
 
     <script>
-        document.getElementById('imageInput').addEventListener('change', function(event) {
+        document.getElementById('imageInput').addEventListener('change', function (event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     document.getElementById('previewImage').src = e.target.result;
                 }
                 reader.readAsDataURL(file);
@@ -350,18 +356,16 @@
             if (hasError) {
                 return false;
             }
-
-            console.log(formData.getAll('totalprice'));
-            
-
             $.ajax({
                 url: "<?= base_url() . 'App/updatePackage' ?>",
                 type: 'POST',
                 data: formData,
                 processData: false,
-                contentType: false, 
-                dataType: "json",   
+                contentType: false,
+                dataType: "json",
                 success: function (response) {
+                    console.log(response);
+
                     try {
                         alert('Berhasil menyimpan perubahan');
                         console.log(response);

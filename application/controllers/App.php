@@ -5322,30 +5322,42 @@ class App extends CI_Controller
 		ini_set('display_errors', 0);
 		ob_start();
 		$db_oriskin = $this->load->database('oriskin', true);
-		$post = json_decode(file_get_contents('php://input'), true);
-
-		if (!$post) {
-			echo json_encode(['status' => 'error', 'message' => 'Invalid data']);
-			return;
-		}
 
 		$db_oriskin->trans_begin();
-		$id = $post['id'];
-
-		$type = $post['type'];
+		$id = $this->input->post('id');
+		$totalprice = $this->input->post('totalprice');
 
 		$data_hdr = [
-			'isactive' => $post['isactive'],
-			'code' => $post['code'],
-			'name' => $post['name'],
+			'isactive' => $this->input->post('isactive'),
+			'code' => $this->input->post('code'),
+			'name' => $this->input->post('name'),
+			'apps_name' => $this->input->post('apps_name'),
+			'description' => $this->input->post('description'),
 		];
+
+		if (!empty($_FILES['image']['name'])) {
+			$config['upload_path'] = './uploads/service/';
+			$config['allowed_types'] = 'jpg|jpeg|png|gif';
+			$config['max_size'] = 2048;
+			$config['file_name'] = time() . '_' . $_FILES['image']['name'];
+
+			$this->load->library('upload', $config);
+
+			if ($this->upload->do_upload('image')) {
+				$uploadData = $this->upload->data();
+				$data_hdr['image'] = 'https://sys.eudoraclinic.com:84/app/uploads/service/' . $uploadData['file_name'];
+			} else {
+				echo json_encode(['status' => 'error', 'message' => $this->upload->display_errors()]);
+				return;
+			}
+		}
 
 		$db_oriskin->where('id', $id);
 		$db_oriskin->update('msproductmembershiphdr', $data_hdr);
 
-		if (isset($post['totalprice'])) {
+		if ($totalprice) {
 			$data_hdrstockin = [
-				'totalprice' => $post['totalprice'],
+				'totalprice' => $totalprice,
 			];
 
 			$db_oriskin->where('productmembershiphdrid', $id);
@@ -5356,12 +5368,13 @@ class App extends CI_Controller
 			$response = ['status' => 'error', 'message' => 'Transaction failed'];
 		} else {
 			$db_oriskin->trans_commit();
-			$response = ['status' => 'success', 'message' => 'Berhasil menambahkan stock out'];
+			$response = ['status' => 'success', 'message' => 'Berhasil menambahkan stock out', 'data' => $data_hdrstockin];
 		}
 
 		echo json_encode($response);
 		exit;
 	}
+
 
 	public function deleteBenefit()
 	{
@@ -7830,8 +7843,7 @@ class App extends CI_Controller
 
 			$db_oriskin->where('downpaymenthdrid', $downpaymenthdrid);
 			$db_oriskin->update('sldownpaymenttreatmentdtl', $update_data_detail_invoicetreatment);
-		}
-		else if ($type == 2) {
+		} else if ($type == 2) {
 			$update_data_header_membership = [
 				'downpaymentdate' => $post['downpaymentdate'],
 				'salesid' => $post['salesid'],
@@ -7851,8 +7863,7 @@ class App extends CI_Controller
 
 			$db_oriskin->where('id', $downpaymenthdrid);
 			$db_oriskin->update('sldownpaymentmembershipdtl', $update_data_detail_membership);
-		} 
-		else if ($type == 3) {
+		} else if ($type == 3) {
 			$update_data_header_retail = [
 				'downpaymentdate' => $post['downpaymentdate'],
 				'salesid' => (int) $post['salesid'],
