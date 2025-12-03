@@ -366,7 +366,9 @@
                                 <span>Order date: <?= $po['orderdate_formatted'] ?></span>
                                 <span>Company name :<?= $po['companyname'] ?></span>
                                 <span>Outlet :<?= $po['outlet'] ?></span>
-                                <span>Vendor :<?= $po['vendorname'] ?></span>
+                                <span>Vendor :<?= $po['vendorname'] ?></span>   
+
+                                 <span>Status :<?= $po['status'] == 3 ? "Paid" : "Approved" ?></span>
                             </div>
                         </div>
                     </div>

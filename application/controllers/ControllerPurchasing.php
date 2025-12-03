@@ -6601,6 +6601,7 @@ class ControllerPurchasing extends CI_Controller
 		$month = $this->input->get('month') ?: date('Y-m');
 		$export_type = $this->input->get('export');
 		$company = $this->input->get('company');
+		$status = $this->input->get('status');
 
 		$db_oriskin = $this->load->database('oriskin', true);
 
@@ -6612,6 +6613,12 @@ class ControllerPurchasing extends CI_Controller
 				$companyWhere = ' AND r.companyid = ?';
 				$params[] = $company;
 			}
+
+			$statusWhere = '';
+			if (!empty($status)) {
+				$statusWhere = " AND po.status $status";
+			}
+
 			$query = $db_oriskin->query("
 				SELECT 
 					po.id AS orderid,
@@ -6629,14 +6636,15 @@ class ControllerPurchasing extends CI_Controller
 						SELECT SUM(b.total_price)
 						FROM purchase_order_items b 
 						WHERE b.purchaseorderid = po.id
-					), 0) AS total_item_amount
+					), 0) AS total_item_amount,
+					po.status
 				FROM purchase_order po
 				INNER JOIN purchase_request r ON r.id = po.purchaserequestid
 				LEFT JOIN mscompany d ON d.id = r.companyid
 				LEFT JOIN mswarehouse e ON r.warehouseid = e.id
 				LEFT JOIN mssupplier f ON po.supplierid = f.id
 				WHERE CONVERT(varchar(7), po.orderdate, 120) = ?
-					AND po.status = 3
+					$statusWhere
 					$companyWhere
 				ORDER BY po.orderdate DESC
 			", $params);
@@ -6777,7 +6785,7 @@ class ControllerPurchasing extends CI_Controller
 		$pdf->writeHTML($html, true, false, true, false, '');
 
 		// Close and output PDF document
-		$pdf->Output('laporan_po_modern_' . $month . '.pdf', 'D');
+		$pdf->Output('laporan_po_' . $month . '.pdf', 'D');
 	}
 
 

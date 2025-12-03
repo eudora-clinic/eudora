@@ -1,8 +1,28 @@
+<style>
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    color: #fff;
+    font-size: 12px;
+}
+
+.status-approved {
+    background-color: #007bff; /* biru */
+}
+
+.status-paid {
+    background-color: #28a745; /* hijau */
+}
+
+
+</style>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <!-- Header yang lebih modern -->
                 <div class="card-header border-0 bg-white">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
@@ -19,6 +39,13 @@
                                     <?php foreach ($companies as $company): ?>
                                         <option value="<?= $company['id'] ?>"><?= $company['text'] ?></option>
                                     <?php endforeach; ?>
+                                </select>
+                            </div>
+
+                            <div class="input-group input-group-sm" style="width: 280px; margin-right: 10">
+                                <select id="statusPurchaseOrder" class="form-control">
+                                    <option value="IN (4,7,6,10,2,3)">Approved</option>
+                                    <option value="IN (3)">Paid</option>
                                 </select>
                             </div>
 
@@ -72,11 +99,10 @@
             loadData();
         });
 
-
-        // Event export PDF
         $('#btnExportPdf').click(function () {
             const month = $('#monthFilter').val();
-            const company = $('#companyFilter').val(); // ambil value company
+            const company = $('#companyFilter').val();
+            const status = $('#statusPurchaseOrder').val();
 
             let url = '<?= site_url('ControllerPurchasing/getOrdersByMonth') ?>?export=pdf&month=' + month;
 
@@ -84,8 +110,13 @@
                 url += '&company=' + company;
             }
 
+            if (status) {
+                url += '&status=' + status;
+            }
+
             window.location.href = url;
         });
+
 
 
         // Enter key untuk filter
@@ -98,6 +129,7 @@
         function loadData() {
             const month = $('#monthFilter').val();
             const companyId = $('#companyFilter').val();
+            const status = $('#statusPurchaseOrder').val();
 
             $('#loading').show();
             $('#poContainer').hide().empty();
@@ -105,7 +137,7 @@
             $.ajax({
                 url: '<?= site_url('ControllerPurchasing/getOrdersByMonth') ?>',
                 type: 'GET',
-                data: { month: month, company: companyId },
+                data: { month: month, company: companyId, status: status },
                 dataType: 'json',
                 success: function (response) {
                     $('#loading').hide();
@@ -176,12 +208,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 text-right">
-                                <div class="total-badge">
-                                    <span class="total-label">Total</span>
-                                    <span class="total-amount">${formatCurrency(po.total_amount)}</span>
-                                </div>
-                            </div>
+                           <div class="col-md-4 text-right">
+    <div class="total-badge">
+        <span class="status-badge ${po.status == 3 ? 'status-paid' : 'status-approved'}">
+            ${po.status == 3 ? "Paid" : "Approved"}
+        </span>
+    </div>
+
+    <div class="total-badge">
+        <span class="total-label">Total</span>
+        <span class="total-amount">${formatCurrency(po.total_amount)}</span>
+    </div>
+</div>
+
+
                         </div>
                     </div>
                     
