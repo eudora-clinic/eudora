@@ -464,8 +464,69 @@ $level = $this->session->userdata('level');
 
 	<?php if ($level == 22): ?>
 		<li class="nav-item">
-			<a style="font-weight: bold;" class="nav-link" href="<?= base_url('deliveryOrderList') ?>">STOCK IN APPROVAL</a>
+			<a style="font-weight: bold;" class="nav-link" href="<?= base_url('deliveryOrderList') ?>">STOCK IN
+				APPROVAL</a>
 		</li>
+
+		<li class="nav-item">
+			<a style="font-weight: bold;" class="nav-link" href="<?= base_url('saleTicketList') ?>">SALE
+				TICKET LIST</a>
+		</li>
+
+		<li class="nav-item">
+			<a style="font-weight: bold;" class="nav-link" href="<?= base_url('facilityReportList') ?>">ASET</a>
+		</li>
+
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu3" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				INVOICE MASTER
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu3">
+				<a class="dropdown-item" href="<?= base_url('invoiceMembership') ?>">INVOICE PACKAGE</a>
+				<a class="dropdown-item" href="<?= base_url('invoiceTreatment') ?>">INVOICE
+					TREATMENT</a>
+				<a class="dropdown-item" href="<?= base_url('invoiceRetail') ?>">INVOICE PRODUCT</a>
+
+				<a class="dropdown-item" href="<?= base_url('invoiceDownMembership') ?>">INVOICE DP
+					PACKAGE</a>
+				<a class="dropdown-item" href="<?= base_url('invoiceDownTreatment') ?>">INVOICE DP
+					TREATMENT</a>
+				<a class="dropdown-item" href="<?= base_url('invoiceDownProduct') ?>">INVOICE DP
+					PRODUCT</a>
+				<!-- <a class="dropdown-item" href="<?= base_url('summaryRevenuePerDay') ?>">SUMMARY REVENUE PER DAY</a> -->
+			</div>
+		</li>
+
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu3" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				MANAGEMENT STOCK
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu3">
+				<a class="dropdown-item" href="<?= base_url('report_ingredients') ?>">STOCK BALANCE</a>
+				<a class="dropdown-item" href="<?= base_url('ingredientsList') ?>">ITEM LIST</a>
+				<a class="dropdown-item" href="<?= base_url('reportStockOpname') ?>">STOCK OPNAME</a>
+				<a class="dropdown-item" href="<?= base_url('stockInList') ?>">STOCK IN LIST</a>
+				<a class="dropdown-item" href="<?= base_url('stockOutList') ?>">STOCK OUT LIST</a>
+			</div>
+		</li>
+
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu4" role="button" data-toggle="dropdown"
+				aria-haspopup="true" aria-expanded="false">
+				PURCHASING
+			</a>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu4">
+				<a class="dropdown-item" href="<?= base_url('purchaseRequestList') ?>">PURCHASE
+					REQUEST</a>
+				<a class="dropdown-item" href="<?= base_url('purchaseOrderList') ?>">PURCHASE
+					ORDER</a>
+				<a class="dropdown-item" href="<?= base_url('deliveryOrderList') ?>">DELIVERY
+					ORDER</a>
+			</div>
+		</li>
+
 
 	<?php endif; ?>
 

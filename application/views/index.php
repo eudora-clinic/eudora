@@ -280,7 +280,7 @@ $level = $this->session->userdata('level');
 						<?php if ($level == 4): ?>
 							<li class="nav-item">
 								<a style="font-weight: bold;" class="nav-link"
-									href="<?= base_url('bookAppointment') ?>">BOOKIN</a>
+									href="<?= base_url('bookAppointment') ?>">BOOKING</a>
 							</li>
 
 							<li class="nav-item">
@@ -1227,6 +1227,10 @@ $level = $this->session->userdata('level');
 								<a style="font-weight: bold;" class="nav-link"
 									href="<?= base_url('deliveryOrderList') ?>">STOCK IN
 									APPROVAL</a>
+							</li>
+							<li class="nav-item">
+								<a style="font-weight: bold;" class="nav-link" href="<?= base_url('saleTicketList') ?>">SALE
+									TICKET LIST</a>
 							</li>
 
 							<li class="nav-item">
