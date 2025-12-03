@@ -113,7 +113,6 @@
     $rawDate = $data['stockopnamedate'];
     $dateObj = new DateTime($rawDate);
 
-
     $formattedDate = $dateObj->format('Y-m-d');
 
     $formattedDateWithDay = strftime("%A, %d %B %Y", $dateObj->getTimestamp());
@@ -131,8 +130,12 @@
                                 <h3 class="card-header card-header-info d-flex justify-content-between align-items-center"
                                     style="font-weight: bold; color: #666666;">
                                     STOCK OPNAME: <?= $data['locationname'], ' - ', $formattedDateWithDay ?>
-                                    <button class="btn btn-primary btn-sm btn-adjust" id="btn-adjust">ADJUST
-                                        ALL</button>
+                                    <?php if ($this->session->userdata('userid') == 69): ?>
+                                        <button class="btn btn-primary btn-sm btn-adjust" id="btn-adjust">
+                                            ADJUST ALL
+                                        </button>
+                                    <?php endif; ?>
+
                                 </h3>
                                 <div class="table-wrapper p-4">
                                     <div class="table-responsive">
@@ -277,7 +280,7 @@
                                         <div class="col-md-5">
                                             <input type="date" name="exp_date[]" class="form-control" required>
                                         </div>
-                                       <div class="col-md-5">
+                                        <div class="col-md-5">
                                             <input type="number" name="quantity[]" class="form-control"
                                                 placeholder="Quantity" step="0.0001" required>
                                         </div>
@@ -305,42 +308,44 @@
                         </div>
                     </form>
                 </div>
-        </div>
+            </div>
 
-</div>
+        </div>
         <div class="modal fade" id="expDateModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="expDateModalLabel">Daftar Exp Date</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-bordered table-striped">
-                    <thead class="thead-light">
-                        <tr>
-                            <th class="text-center" style="width: 10%">#</th>
-                            <th class="text-center" style="width: 45%">Exp Date</th>
-                            <th class="text-center" style="width: 45%">Quantity</th>
-                            <th class="text-center" style="width: 45%">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="expDateTableBody">
-                        <tr><td colspan="3" class="text-center text-muted">Belum ada data</td></tr>
-                    </tbody>
-                    </table>
-                </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="expDateModalLabel">Daftar Exp Date</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th class="text-center" style="width: 10%">#</th>
+                                    <th class="text-center" style="width: 45%">Exp Date</th>
+                                    <th class="text-center" style="width: 45%">Quantity</th>
+                                    <th class="text-center" style="width: 45%">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="expDateTableBody">
+                                <tr>
+                                    <td colspan="3" class="text-center text-muted">Belum ada data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
 
-<script>
-$(document).ready(function () {
-    // Tambah baris Exp Date baru
-    $('#addExpDate').on('click', function () {
-        let newRow = `
+        <script>
+            $(document).ready(function () {
+                // Tambah baris Exp Date baru
+                $('#addExpDate').on('click', function () {
+                    let newRow = `
             <div class="row mb-2 exp-row">
                 <div class="col-md-5">
                     <input type="date" name="exp_date[]" class="form-control" required>
@@ -355,30 +360,30 @@ $(document).ready(function () {
                     </button>
                 </div>
             </div>`;
-        $('#expDateContainer').append(newRow);
-    });
+                    $('#expDateContainer').append(newRow);
+                });
 
-    // Hapus baris Exp Date
-    $(document).on('click', '.removeRow', function () {
-        $(this).closest('.exp-row').remove();
-    });
-});
-</script>
+                // Hapus baris Exp Date
+                $(document).on('click', '.removeRow', function () {
+                    $(this).closest('.exp-row').remove();
+                });
+            });
+        </script>
 
     </div>
 </body>
 <script>
-document.addEventListener('input', function(e) {
-    if (e.target.name === 'quantity[]') {
-        let val = e.target.value;
-        if (val.includes('.')) {
-            const [intPart, decPart] = val.split('.');
-            if (decPart.length > 4) {
-                e.target.value = parseFloat(val).toFixed(4);
+    document.addEventListener('input', function (e) {
+        if (e.target.name === 'quantity[]') {
+            let val = e.target.value;
+            if (val.includes('.')) {
+                const [intPart, decPart] = val.split('.');
+                if (decPart.length > 4) {
+                    e.target.value = parseFloat(val).toFixed(4);
+                }
             }
         }
-    }
-});
+    });
 </script>
 <script>
     var numberFormat = function (number, decimals, dec_point, thousands_sep) {
@@ -431,7 +436,7 @@ document.addEventListener('input', function(e) {
             buttons: ['excel']
         });
 
-    
+
 
         function fetchData() {
             const formData = {
@@ -511,8 +516,8 @@ document.addEventListener('input', function(e) {
                         $('#stock_opname_id').val(stock_opname_id);
 
                         if (exp_date && exp_date !== 'null' && exp_date !== '') {
-                            
-                            let formattedDate = exp_date.split(' ')[0]; 
+
+                            let formattedDate = exp_date.split(' ')[0];
                             $('#exp_date').val(formattedDate);
                         } else {
                             $('#exp_date').val('');
@@ -598,7 +603,7 @@ document.addEventListener('input', function(e) {
         //                 const data = response.data;
         //                 const expdates = response.expdates || [];
 
-                      
+
         //                 $('#createModal').modal('show');
         //                 $('#id').val(data.id);
         //                 $('#locationid').val(data.locationid);
@@ -683,7 +688,7 @@ document.addEventListener('input', function(e) {
                             const formattedDate = item.exp_date
                                 ? new Date(item.exp_date).toLocaleDateString('id-ID')
                                 : '-';
-                           const quantity = Number(item.quantity).toString().replace(/\./g, ',').replace(/,?0+$/, '');
+                            const quantity = Number(item.quantity).toString().replace(/\./g, ',').replace(/,?0+$/, '');
 
                             const row = `
                                 <tr>
@@ -791,7 +796,7 @@ document.addEventListener('input', function(e) {
                         Swal.fire("Error", response.message || "Gagal memuat data stok opname", "error");
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("AJAX Error:", error);
                     Swal.fire("Error", "Terjadi kesalahan saat mengambil data stok opname", "error");
                 }
@@ -896,8 +901,8 @@ document.addEventListener('input', function(e) {
                 last_stock: $('#last_stock').val(),
                 stock: $('#stock').val(),
                 note: $('#note').val(),
-                exp_dates: exp_dates,   
-                quantities: quantities  
+                exp_dates: exp_dates,
+                quantities: quantities
             };
 
             $.ajax({
