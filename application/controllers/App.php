@@ -9416,6 +9416,7 @@ class App extends CI_Controller
 		$data['membershipExchange'] = $this->MApp->getPrepaidCustomerMembershipForExchange($customerid);
 		$data['listAppointment'] = $this->MApp->getListAppointment($customerid);
 		$data['listHistoryRetail'] = $this->MApp->getListHistoryRetail($customerid);
+		$data['listHistoryExchange'] = $this->MApp->getListHistoryExchangeInvoice($customerid);
 		$data['title'] = 'DETAIL PREPAID INVOICE';
 		$data['content'] = 'detailPrepaidInvoiceCustomer';
 		$data['customerId'] = $customerid;

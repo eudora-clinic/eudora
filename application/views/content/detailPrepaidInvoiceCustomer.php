@@ -616,7 +616,7 @@
             "info": false,
         });
 
-         $('#tablehistoryExchange').DataTable({
+        $('#tablehistoryExchange').DataTable({
             "pageLength": 100,
             "lengthMenu": [2, 10, 15, 20, 25, 100],
             select: true,
@@ -624,7 +624,7 @@
             "info": false,
         });
 
-        
+
 
 
         $('#tableexchangePackage').DataTable({

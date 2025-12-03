@@ -2831,23 +2831,45 @@ class MApp extends CI_Model
 
 	public function getListHistoryExchangeInvoice($customerId)
 	{
-		$db_oriskin = $this->load->database('oriskin', true);
-		$query = "SELECT 
-					CONVERT(varchar(10), a.exchangedate, 120) AS EXCHANGEDATE, 
-					d.name AS TREATMENT,
-					a.qty AS QTY,
-					a.invoiceno AS INVOICENO,
-					a.point AS AMOUNT,
-					c.firstname + ' ' + c.lastname as FULLNAME
-				FROM 
-					msexchangetreatment a
-					INNER JOIN mscustomer c ON a.customerid = c.id
-					INNER JOIN mstreatment d ON a.productid = d.id
-				WHERE
-					a.customerid = ? AND a.status = 1
-				";
-		return $db_oriskin->query($query, [$customerId])->result_array();
+		$db = $this->load->database('oriskin', true);
+
+		$query = "
+        SELECT 
+            CONVERT(varchar(10), a.exchangedate, 120) AS EXCHANGEDATE,
+            d.name AS TREATMENT,
+            a.qty AS QTY,
+            a.invoiceno AS INVOICENO,
+            a.point AS AMOUNT,
+            c.firstname + ' ' + c.lastname AS FULLNAME
+        FROM msexchangetreatment a
+            INNER JOIN mscustomer c ON a.customerid = c.id
+            INNER JOIN mstreatment d ON a.productid = d.id
+        WHERE 
+            a.customerid = ? 
+            AND a.status = 1
+
+        UNION ALL
+
+        SELECT 
+            CONVERT(varchar(10), b.exchangedate, 120) AS EXCHANGEDATE,
+            e.name AS TREATMENT,
+            b.qty AS QTY,
+            b.invoiceno AS INVOICENO,
+            b.point AS AMOUNT,
+            c.firstname + ' ' + c.lastname AS FULLNAME
+        FROM msexchange b
+            INNER JOIN mscustomer c ON b.customerid = c.id
+            INNER JOIN mstreatment e ON b.productid = e.id
+        WHERE 
+            b.customerid = ? 
+            AND b.status = 1
+
+        ORDER BY EXCHANGEDATE DESC
+    ";
+
+		return $db->query($query, [$customerId, $customerId])->result_array();
 	}
+
 
 
 	public function authenticationErp()
