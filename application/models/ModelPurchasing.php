@@ -652,6 +652,16 @@ class ModelPurchasing extends CI_Model
 
 	public function get_all_delivery_order_by_date($date = null, $company = null, $userid = null)
 	{
+		$level = $this->session->userdata('level');
+		$locationid = $this->session->userdata('locationid');
+
+		$location = $this->db_oriskin->select('*')
+			->from('mslocation')
+			->where('id', $locationid)
+			->get()
+			->row_array();
+
+
 		// Select kolom-kolom yang dibutuhkan
 		$this->db_oriskin->select('
 			do.*,
@@ -691,10 +701,14 @@ class ModelPurchasing extends CI_Model
 			$this->db_oriskin->where("do.createdat <=", $date . ' 23:59:59');
 		}
 
-		if ($company) {
+		if ($level == 1) {
+			$this->db_oriskin->where("r.companyid", $location['companyid']);
+		}
+
+		if ($company && $level != 1) {
 			$this->db_oriskin->where("r.companyid", $company);
 		}
-		if (!in_array($userid, [67, 68, 69, 17, 71, 23, 29])) {
+		if (!in_array($userid, [67, 68, 69, 17, 71, 23, 29]) && $level != 1) {
 			$this->db_oriskin->where("o.ordererid", $userid);
 		}
 

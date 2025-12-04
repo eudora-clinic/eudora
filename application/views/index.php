@@ -356,7 +356,9 @@ $level = $this->session->userdata('level');
 										COMMISSION AFFILIATE</a>
 									<a class="dropdown-item" href="<?= base_url('reportCommissionPerInvoice') ?>">COMMISSION
 										PER INVOICE</a>
-										<a class="dropdown-item" href="<?= base_url('reportGuestCustomerServiceOnline') ?>">REPORT COMMISSION TRILOGY</a>
+									<a class="dropdown-item"
+										href="<?= base_url('reportGuestCustomerServiceOnline') ?>">REPORT COMMISSION
+										TRILOGY</a>
 
 								</div>
 							</li>
@@ -755,7 +757,8 @@ $level = $this->session->userdata('level');
 								</div>
 							</li>
 							<li class="nav-item">
-								<a style="font-weight: bold;" class="nav-link" href="<?= base_url('reportOrderMonthly') ?>">REPORT PEMBELIAN</a>
+								<a style="font-weight: bold;" class="nav-link"
+									href="<?= base_url('reportOrderMonthly') ?>">REPORT PEMBELIAN</a>
 							</li>
 						<?php endif; ?>
 
@@ -897,22 +900,6 @@ $level = $this->session->userdata('level');
 									<a class="dropdown-item" href="<?= base_url('stockOutList') ?>">STOCK OUT LIST</a>
 								</div>
 							</li>
-							<!-- 
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu1" role="button"
-									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									TRANSACTION TODAY
-								</a>
-								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu1">
-									<a class="dropdown-item" href="<?= base_url('transactionTreatmentToday') ?>">TRANSACTION
-										TREATMENT TODAY</a>
-									<a class="dropdown-item" href="<?= base_url('transactionTodayPaket') ?>">TRANSACTION
-										PACKAGE TODAY</a>
-									<a class="dropdown-item" href="<?= base_url('transactionTodayRetail') ?>">TRANSACTION
-										PRODUCT TODAY</a>
-								</div>
-							</li> -->
-
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu3" role="button"
 									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -932,7 +919,6 @@ $level = $this->session->userdata('level');
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu4">
 									<a class="dropdown-item" href="<?= base_url('purchaseRequestLists') ?>">PURCHASE
 										REQUEST</a>
-									<!-- <a class="dropdown-item" href="<?= base_url('purchaseOrderList') ?>">PURCHASE ORDER</a> -->
 									<a class="dropdown-item" href="<?= base_url('deliveryOrderList') ?>">DELIVERY ORDER</a>
 								</div>
 							</li>
@@ -1035,7 +1021,8 @@ $level = $this->session->userdata('level');
 									ORDER</a>
 							</li>
 							<li class="nav-item">
-								<a style="font-weight: bold;" class="nav-link" href="<?= base_url('reportOrderMonthly') ?>">REPORT PEMBELIAN</a>
+								<a style="font-weight: bold;" class="nav-link"
+									href="<?= base_url('reportOrderMonthly') ?>">REPORT PEMBELIAN</a>
 							</li>
 						<?php endif; ?>
 						<?php if ($level == 10): ?>
@@ -1076,7 +1063,9 @@ $level = $this->session->userdata('level');
 										EVENT</a>
 									<a class="dropdown-item" href="<?= base_url('reportGuestEventNotShow') ?>">REPORT GUEST
 										NOT SHOW</a>
-									<a class="dropdown-item" href="<?= base_url('reportTransactionCustomerEventRoadshow') ?>">REPORT TRANSACTION EVENT ROADSHOW</a>
+									<a class="dropdown-item"
+										href="<?= base_url('reportTransactionCustomerEventRoadshow') ?>">REPORT TRANSACTION
+										EVENT ROADSHOW</a>
 								</div>
 							</li>
 
@@ -1216,7 +1205,8 @@ $level = $this->session->userdata('level');
 							</li>
 
 							<li class="nav-item">
-								<a style="font-weight: bold;" class="nav-link" href="<?= base_url('reportOrderMonthly') ?>">RERPORT PEMBELIAN</a>
+								<a style="font-weight: bold;" class="nav-link"
+									href="<?= base_url('reportOrderMonthly') ?>">RERPORT PEMBELIAN</a>
 							</li>
 
 
@@ -1561,10 +1551,11 @@ $level = $this->session->userdata('level');
 									<a class="dropdown-item" href="<?= base_url('ingredientsList') ?>">INGREDIENTS LIST</a>
 									<a class="dropdown-item" href="<?= base_url('serviceList') ?>">SERVICES LIST</a>
 									<a class="dropdown-item" href="<?= base_url('packageList') ?>">PACKAGES LIST</a>
-									<a style="font-weight: bold;" class="nav-link" href="<?= base_url('saleTicketList') ?>">SALE
-									TICKET LIST</a>
 									<a style="font-weight: bold;" class="nav-link"
-									href="<?= base_url('bookAppointment') ?>">BOOKING</a>
+										href="<?= base_url('saleTicketList') ?>">SALE
+										TICKET LIST</a>
+									<a style="font-weight: bold;" class="nav-link"
+										href="<?= base_url('bookAppointment') ?>">BOOKING</a>
 
 								</div>
 							</li>
@@ -1616,7 +1607,9 @@ $level = $this->session->userdata('level');
 										COMMISSION AFFILIATE</a>
 									<a class="dropdown-item" href="<?= base_url('reportCommissionPerInvoice') ?>">COMMISSION
 										PER INVOICE</a>
-										<a class="dropdown-item" href="<?= base_url('reportGuestCustomerServiceOnline') ?>">REPORT COMMISSION TRILOGY</a>
+									<a class="dropdown-item"
+										href="<?= base_url('reportGuestCustomerServiceOnline') ?>">REPORT COMMISSION
+										TRILOGY</a>
 
 								</div>
 							</li>
@@ -1740,13 +1733,13 @@ $level = $this->session->userdata('level');
 									STOCK
 								</a>
 								<div class="dropdown-menu" aria-labelledby="navbarDropdownMenu0">
-									
+
 									<a class="dropdown-item" href="<?= base_url('reportStockOpname') ?>">STOCK OPNAME</a>
 									<!-- <a class="dropdown-item" href="<?= base_url('stockInList') ?>">STOCK IN LIST</a> -->
 									<!-- <a class="dropdown-item" href="<?= base_url('stockOutList') ?>">STOCK OUT LIST</a> -->
-									 <a class="dropdown-item" href="<?= base_url('report_ingredients') ?>">STOCK BALANCE</a>
+									<a class="dropdown-item" href="<?= base_url('report_ingredients') ?>">STOCK BALANCE</a>
 									<a class="dropdown-item" href="<?= base_url('ingredientsList') ?>">ITEM LIST</a>
-									
+
 									<a class="dropdown-item" href="<?= base_url('stockInList') ?>">STOCK IN LIST</a>
 									<a class="dropdown-item" href="<?= base_url('stockOutList') ?>">STOCK OUT LIST</a>
 								</div>
@@ -1959,25 +1952,8 @@ $level = $this->session->userdata('level');
 		document.getElementById('locationSelect').addEventListener('change', function () {
 			const locationId = this.value;
 
-			fetch('<?= base_url('App/set_ajax') ?>', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-					'X-Requested-With': 'XMLHttpRequest'
-				},
-				body: 'locationid=' + encodeURIComponent(locationId)
-			})
-				.then(response => {
-					if (response.ok) {
-						location.reload();
-					} else {
-						alert('Gagal mengubah lokasi.');
-					}
-				});
-		});
+			console.log('locationId');
 
-		document.getElementById('locationSelect2').addEventListener('change', function () {
-			const locationId = this.value;
 
 			fetch('<?= base_url('App/set_ajax') ?>', {
 				method: 'POST',
@@ -1995,11 +1971,6 @@ $level = $this->session->userdata('level');
 					}
 				});
 		});
-
-
-
-
-
 	</script>
 </body>
 
