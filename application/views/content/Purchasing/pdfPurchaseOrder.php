@@ -172,8 +172,9 @@
     <div class="table">
         <table class="no-border small-text" style="margin:20px;">
             <tr>
-                <!-- <td><?= $purchase_order['orderer_name'] ?? '-' ?></td> -->
                 <td></td>
+                <td></td>
+
                 <td>
                     <table class="no-border">
                         <tr>
@@ -184,8 +185,8 @@
                 </td>
             </tr>
             <tr>
-                <td><?= $purchase_order['companyname'] ?? '-' ?></td>
-                <td></td>
+                                <td></td>
+                                                <td></td>
                 <td>
                     <table class="no-border">
                         <tr>
@@ -207,6 +208,13 @@
                         </tr>
                     </table>
                 </td>
+            </tr>
+             <tr>
+                <td><?= $purchase_order['companyname'] ?? '-' ?>
+                </td>
+                <td></td>
+                <td></td>
+                
             </tr>
             <tr>
                 <td><?= $purchase_order['company_address'] ?? '-' ?>, <?= $purchase_order['city_name'] ?>,
@@ -412,80 +420,80 @@
 
     <br><br>
 
-    <?php if ($tes=="1") { ?>
-            <table class="small-text">
-        <tr bgcolor="#d3d3d3">
-            <td class="signature-label">Order By</td>
-            <td class="signature-label">Knowed By</td>
-        </tr>
-        <tr>
-            <td class="signature-box">
-                <br><br>
-                <img src="<?= base_url('uploads/ttd/ttd_mas_bowo.jpg') ?>" alt="TTD 1"
-                    style="height: 40px; width: 40px;">
+    <?php if ($tes == "1") { ?>
+        <table class="small-text">
+            <tr bgcolor="#d3d3d3">
+                <td class="signature-label">Order By</td>
+                <td class="signature-label">Knowed By</td>
+            </tr>
+            <tr>
+                <td class="signature-box">
+                    <br><br>
+                    <img src="<?= base_url('uploads/ttd/ttd_mas_bowo.jpg') ?>" alt="TTD 1"
+                        style="height: 40px; width: 40px;">
 
-                <br>
-                <p class="medium-text"></p>
-            </td>
+                    <br>
+                    <p class="medium-text"></p>
+                </td>
 
-            <td class="signature-box">
-                <br><br>
-                <?php if (!empty($ttd1)): ?>
-                    <img src="<?= base_url('uploads/ttd/' . $ttd1) ?>" alt="TTD 1" style="height: 40px; width: 40px;">
-                <?php endif; ?>
-                <br>
-                <p class="medium-text"></p>
-            </td>
-        </tr>
-        <tr>
-            <td class="signature-label"><?= $purchase_order['orderer_name'] ?? '' ?></td>
-            <td class="signature-label"><?= $purchase_order['approved_by'] ?? 'Dessi Anita' ?></td>
-        </tr>
-    </table>
+                <td class="signature-box">
+                    <br><br>
+                    <?php if (!empty($ttd1)): ?>
+                        <img src="<?= base_url('uploads/ttd/' . $ttd1) ?>" alt="TTD 1" style="height: 40px; width: 40px;">
+                    <?php endif; ?>
+                    <br>
+                    <p class="medium-text"></p>
+                </td>
+            </tr>
+            <tr>
+                <td class="signature-label"><?= $purchase_order['orderer_name'] ?? '' ?></td>
+                <td class="signature-label"><?= $purchase_order['approved_by'] ?? 'Dessi Anita' ?></td>
+            </tr>
+        </table>
     <?php } else { ?>
-                <table class="small-text">
-        <tr bgcolor="#d3d3d3">
-            <td class="signature-label">Order By</td>
-            <td class="signature-label">Knowed By</td>
-            <td class="signature-label">Approved By</td>
-        </tr>
-        <tr>
-            <td class="signature-box">
-                <br><br>
-                <img src="<?= base_url('uploads/ttd/ttd_mas_bowo.jpg') ?>" alt="TTD 1"
-                    style="height: 40px; width: 40px;">
+        <table class="small-text">
+            <tr bgcolor="#d3d3d3">
+                <td class="signature-label">Order By</td>
+                <td class="signature-label">Knowed By</td>
+                <td class="signature-label">Approved By</td>
+            </tr>
+            <tr>
+                <td class="signature-box">
+                    <br><br>
+                    <img src="<?= base_url('uploads/ttd/ttd_mas_bowo.jpg') ?>" alt="TTD 1"
+                        style="height: 40px; width: 40px;">
 
-                <br>
-                <p class="medium-text"></p>
-            </td>
+                    <br>
+                    <p class="medium-text"></p>
+                </td>
 
-            <td class="signature-box">
-                <br><br>
-                <?php if (!empty($ttd1)): ?>
-                    <img src="<?= base_url('uploads/ttd/' . $ttd1) ?>" alt="TTD 1" style="height: 40px; width: 40px;">
-                <?php endif; ?>
-                <br>
-                <p class="medium-text"></p>
-            </td>
+                <td class="signature-box">
+                    <br><br>
+                    <?php if (!empty($ttd1)): ?>
+                        <img src="<?= base_url('uploads/ttd/' . $ttd1) ?>" alt="TTD 1" style="height: 40px; width: 40px;">
+                    <?php endif; ?>
+                    <br>
+                    <p class="medium-text"></p>
+                </td>
 
-            <td class="signature-box">
-                <br><br>
-                <?php if (!empty($ttd2)): ?>
-                    <img src="<?= base_url('uploads/ttd/' . $ttd2) ?>" alt="TTD 2"
-                        style="height: 40px; width: 60px;padding:5px;">
-                <?php endif; ?>
-                <br>
-                <p class="medium-text"></p>
-            </td>
-        </tr>
-        <tr>
-            <td class="signature-label"><?= $purchase_order['orderer_name'] ?? '' ?></td>
-            <td class="signature-label"><?= $purchase_order['approved_by'] ?? 'Dessi Anita' ?></td>
-            <td class="signature-label"><?= $purchase_order['final_approved_by'] ?? 'Sabrina Gouw' ?></td>
-        </tr>
-    </table>
+                <td class="signature-box">
+                    <br><br>
+                    <?php if (!empty($ttd2)): ?>
+                        <img src="<?= base_url('uploads/ttd/' . $ttd2) ?>" alt="TTD 2"
+                            style="height: 40px; width: 60px;padding:5px;">
+                    <?php endif; ?>
+                    <br>
+                    <p class="medium-text"></p>
+                </td>
+            </tr>
+            <tr>
+                <td class="signature-label"><?= $purchase_order['orderer_name'] ?? '' ?></td>
+                <td class="signature-label"><?= $purchase_order['approved_by'] ?? 'Dessi Anita' ?></td>
+                <td class="signature-label"><?= $purchase_order['final_approved_by'] ?? 'Sabrina Gouw' ?></td>
+            </tr>
+        </table>
     <?php } ?>
-    
+
 
 </body>
 
