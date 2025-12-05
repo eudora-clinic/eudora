@@ -1348,7 +1348,8 @@
             let todayStr = today.toISOString().split('T')[0];
             let yesterdayStr = yesterday.toISOString().split('T')[0];
 
-            if (appointmentdate < yesterdayStr && locationId != 13) {
+
+            if (appointmentdate < yesterdayStr && locationId != 13 && appointmentId == '') {
                 alert("Tidak dapat menyimpan karena melewati batas hari (maks. kemarin)!");
                 return;
             }
@@ -1390,7 +1391,7 @@
                                     locationId: locationId,
                                     status: status,
                                     employeeBooking: employeeBooking,
-                                    override: true // optional flag jika kamu mau handle khusus
+                                    override: true 
                                 },
                                 success: function (response2) {
                                     if (response2.status === "success") {
