@@ -831,49 +831,47 @@
             });
         }
 
-        function formatRupiah(angka) {
-            if (angka === '' || angka === null || angka === undefined || isNaN(angka)) return '';
-
-            // Pastikan angka berupa integer (bulat)
-            angka = parseInt(angka);
-
-            let numberString = angka.toString();
-
-            let sisa = numberString.length % 3;
-            let rupiah = numberString.substr(0, sisa);
-            let ribuan = numberString.substr(sisa).match(/\d{3}/gi);
-
-            if (ribuan) {
-                let separator = sisa ? '.' : '';
-                rupiah += separator + ribuan.join('.');
-            }
-
-            return rupiah;
-        }
-
-
         // function formatRupiah(angka) {
         //     if (angka === '' || angka === null || angka === undefined || isNaN(angka)) return '';
+        //     angka = parseInt(angka);
 
-        //     // Pastikan angka berupa float
-        //     angka = parseFloat(angka);
+        //     let numberString = angka.toString();
 
-        //     // Format menjadi 2 angka di belakang koma
-        //     let numberString = angka.toFixed(2).replace('.', ','); // ubah titik desimal jadi koma
-
-        //     let split = numberString.split(',');
-        //     let sisa = split[0].length % 3;
-        //     let rupiah = split[0].substr(0, sisa);
-        //     let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+        //     let sisa = numberString.length % 3;
+        //     let rupiah = numberString.substr(0, sisa);
+        //     let ribuan = numberString.substr(sisa).match(/\d{3}/gi);
 
         //     if (ribuan) {
         //         let separator = sisa ? '.' : '';
         //         rupiah += separator + ribuan.join('.');
         //     }
-        //     rupiah = rupiah + ',' + split[1];
 
         //     return rupiah;
         // }
+
+
+        function formatRupiah(angka) {
+            if (angka === '' || angka === null || angka === undefined || isNaN(angka)) return '';
+
+            // Pastikan angka berupa float
+            angka = parseFloat(angka);
+
+            // Format menjadi 2 angka di belakang koma
+            let numberString = angka.toFixed(2).replace('.', ','); // ubah titik desimal jadi koma
+
+            let split = numberString.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            rupiah = rupiah + ',' + split[1];
+
+            return rupiah;
+        }
 
 
         function unformatRupiah(str) {
@@ -911,6 +909,9 @@
 
         $('#editPriceForm').on('submit', function (e) {
             e.preventDefault();
+
+            console.log($(this).serialize());
+            
             $.ajax({
                 url: '<?= base_url('ControllerPurchasing/updatePurchaseOrderItem') ?>',
                 type: 'POST',
@@ -921,9 +922,9 @@
                     
                     if (res.status === 'success') {
                         Swal.fire('Berhasil', res.message, 'success');
-                        // setTimeout(function () {
-                        //     location.reload();
-                        // }, 1500);
+                        setTimeout(function () {
+                            location.reload();
+                        }, 1500);
 
                         $('#editPriceModal').modal('hide');
                     } else {

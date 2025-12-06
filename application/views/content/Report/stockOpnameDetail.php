@@ -491,6 +491,7 @@
                             row.ADJUSTMENTINTHISSO || '',
                             row.ADJUSTMENTOUTTHISSO || '',
                             (row.ISNEEDADJUSTMENT == 1 ? 'Butuh Adjust' : (row.ISNEEDADJUSTMENT == 0 ? 'Ok' : '')),
+                            row.INGREDIENTSID || '',
                         ]);
                     });
                     table.clear().rows.add(dataFormatted).draw();
@@ -933,9 +934,9 @@
             const allData = table.rows().data().toArray();
             const payload = allData
                 .map(row => {
-                    const diff = parseFloat(row[5]);
-                    const adjInSoThisMonth = parseFloat(row[10]);
-                    const adjOutSoThisMonth = parseFloat(row[11]);
+                    const diff = parseFloat(row[6]);
+                    const adjInSoThisMonth = parseFloat(row[12]);
+                    const adjOutSoThisMonth = parseFloat(row[13]);
 
                     console.log(diff, adjInSoThisMonth, adjOutSoThisMonth);
 
@@ -944,10 +945,10 @@
                     }
 
                     return {
-                        ingredientid: $(row[7]).find('.btn-update').data('ingredientid'),
-                        currentstock: row[3],
-                        stockreal: row[4],
-                        note: row[6],
+                        ingredientid: row[15],
+                        currentstock: row[4],
+                        stockreal: row[5],
+                        note: row[7],
                         difference: diff,
                         type: diff > 0 ? 'IN' : 'OUT', // tentukan IN/OUT
                         stock_opname_id: stock_opname_id
@@ -959,9 +960,6 @@
                 alert("Tidak ada data yang perlu di-adjust.");
                 return;
             }
-
-            console.log(payload.length, 'payload');
-
             $.ajax({
                 url: "<?= base_url('ControllerReport/saveStockOpnameBulk') ?>",
                 method: "POST",
