@@ -321,6 +321,8 @@ $level = $this->session->userdata('level');
 
 									<a class="dropdown-item" href="<?= base_url('reportRevenueByCustomer') ?>">REPORT
 										REVENUE By CUSTOMER</a>
+										<a class="dropdown-item" href="<?= base_url('reportCustomerDoingAndSpending') ?>">REPORT
+										CUSTOMER DOING AND SPENDING</a>
 								</div>
 							</li>
 
