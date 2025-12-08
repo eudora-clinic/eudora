@@ -847,12 +847,12 @@ class ControllerPOS extends CI_Controller
             'status' => $post['status'],
             'stockmovement' => $post['stockmovement'],
             'issuedby' => $post['issuedby'] == "" ? NULL : $post['issuedby'],
-            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
+            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['locationid'],
             'fromwarehouseid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
         ];
 
         $data_hdrstockin = [
-            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['toLocationId'],
+            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['locationid'],
             'towarehouseid' => $post['toLocationId'] == "" ? NULL : $to['warehouseid'],
             'updateuserid' => $userid,
             'stockindate' => $post['stockoutdate'],
@@ -862,7 +862,7 @@ class ControllerPOS extends CI_Controller
             'stockmovement' => $post['stockmovement'],
             'issuedby' => $post['issuedby'] == "" ? NULL : $post['issuedby'],
             'supplierid' => $post['supplierid'] == "" ? NULL : $post['supplierid'],
-            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
+            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['locationid'],
             'fromwarehouseid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
         ];
 
@@ -918,7 +918,7 @@ class ControllerPOS extends CI_Controller
             ->row_array();
 
         $data_hdr = [
-            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['toLocationId'],
+            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['locationid'],
             'towarehouseid' => $post['toLocationId'] == "" ? NULL : $to['warehouseid'],
             'updateuserid' => $userid,
             'stockoutdate' => $post['stockoutdate'],
@@ -926,7 +926,7 @@ class ControllerPOS extends CI_Controller
             'refferenceno' => $post['refferenceno'] == "" ? NULL : $post['refferenceno'],
             'stockmovement' => $post['stockmovement'],
             'issuedby' => $post['issuedby'] == "" ? NULL : $post['issuedby'],
-            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
+            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['locationid'],
             'fromwarehouseid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
         ];
 
@@ -991,7 +991,7 @@ class ControllerPOS extends CI_Controller
         $db_oriskin->trans_begin();
 
         $data_hdr = [
-            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['toLocationId'],
+            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['locationid'],
             'towarehouseid' => $post['toLocationId'] == "" ? NULL : $to['warehouseid'],
             'updateuserid' => $userid,
             'stockindate' => $post['stockindate'],
@@ -1003,7 +1003,7 @@ class ControllerPOS extends CI_Controller
             'producttype' => NULL,
             'issuedby' => $post['issuedby'] == "" ? NULL : $post['issuedby'],
             'supplierid' => $post['supplierid'] == "" ? NULL : $post['supplierid'],
-            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
+            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['locationid'],
             'fromwarehouseid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
         ];
         $db_oriskin->insert('msingredientsstockin', $data_hdr);
@@ -1083,7 +1083,7 @@ class ControllerPOS extends CI_Controller
         $db_oriskin->trans_begin();
 
         $data_hdr = [
-            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['toLocationId'],
+            'tolocationid' => $post['toLocationId'] == "" ? NULL : $to['locationid'],
             'towarehouseid' => $post['toLocationId'] == "" ? NULL : $to['warehouseid'],
             'updateuserid' => $userid,
             'stockoutdate' => $post['stockoutdate'],
@@ -1096,7 +1096,7 @@ class ControllerPOS extends CI_Controller
             'invoiceno' => $post['invoiceno'] == "" ? NULL : $post['invoiceno'],
             'producttype' => NULL,
             'issuedby' => $post['issuedby'] == "" ? NULL : $post['issuedby'],
-            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid'],
+            'fromlocationid' => $post['fromLocationId'] == "" ? NULL : $from['locationid'],
             'fromwarehouseid' => $post['fromLocationId'] == "" ? NULL : $from['warehouseid']
         ];
         $db_oriskin->insert('msingredientsstockout', $data_hdr);

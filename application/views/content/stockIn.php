@@ -176,7 +176,7 @@
     <div class="row p-4 gap-4">
         <button type="button" class="btn btn-primary mb-4" onclick="saveStockOut(1)" style="background-color: #c49e8f; color: black;">SAVE AS DRAFT</button>
         <button type="button" class="btn btn-primary mb-4" onclick="saveStockOut(2)" style="background-color: #c49e8f; color: black;">APPROVE</button>
-        <a href="https://sys.eudoraclinic.com:84/app/stockInList" class="btn btn-primary mb-4">
+        <a href="<?= base_url('stockInList'); ?>" class="btn btn-primary mb-4">
             <i class="bi bi-plus-circle"></i> CANCEL
         </a>
     </div>
@@ -286,8 +286,6 @@
                 fromLocationId,
                 supplierid
             };
-
-            console.log(transactionData);
 
             if (hasError) {
                 return false;

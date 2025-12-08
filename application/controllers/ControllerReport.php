@@ -175,7 +175,7 @@ class ControllerReport extends CI_Controller
                         'title' => 'REPORT KPI CONSULTANT',
                         'content' => 'Report/reportAchievementConsultant',
                         'locationList' => $this->MApp->get_location_list(),
-                        'period' => $period
+                        'period' => $period 
                     ];
                     $data['mod'] = $type;
                     break;

@@ -146,7 +146,7 @@
                                 <h3 class="card-header card-header-info d-flex justify-content-between align-items-center"
                                     style="font-weight: bold; color: #666666;">
                                     STOCK OUT LIST: <?= $dateStart ?> - <?= $dateEnd ?>
-                                    <a href="https://sys.eudoraclinic.com:84/app/stockOut"
+                                    <a href="<?= base_url('stockOut'); ?>"
                                         class="btn btn-primary btn-sm">
                                         <i class="bi bi-plus-circle"></i> TAMBAH
                                     </a>
