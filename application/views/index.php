@@ -1311,8 +1311,7 @@ $level = $this->session->userdata('level');
 										PRESCRIPTION DOKTER</a>
 									<a class="dropdown-item" href="<?= base_url('reportGuestOnlineAdmin') ?>">COMMISSION
 										FIRST VISIT (MARKETING)</a>
-									<a class="dropdown-item" href="<?= base_url('reportCommissionConsultant') ?>">COMMISSION
-										SALES</a>
+									<a class="dropdown-item" href="<?= base_url('reportAchievementConsultant') ?>">REPORT KPI CONSULTANT</a>
 									<a class="dropdown-item" href="<?= base_url('reportCommissionOM') ?>">COMMISSION OM</a>
 									<a class="dropdown-item" href="<?= base_url('reportGuestEvent') ?>">COMMISSION SALES AND
 										MANGER EVENT ROADSHOW</a>

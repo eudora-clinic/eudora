@@ -496,41 +496,6 @@ class MApp extends CI_Model
 		}
 		return $result;
 	}
-
-	public function data_shift($period, $locationid)
-	{
-		$db_oriskin = $this->load->database('oriskin', true);
-
-		$data_shift = $db_oriskin->query("
-					SELECT *
-					FROM msshift
-					ORDER BY id
-				")->result_array();
-
-		# S: HENDI
-		$data_dokter = $db_oriskin->query("
-					SELECT TIMESTART, TIMEFINISH, EMPLOYEEID, REMARKS, EMPLOYEENAME, CUSTOMERID, CUSTOMERNAME, TREATMENTNAME, QTY, DOINGID, ABSENCETIME, REMARKSBOOKING
-					FROM [fnReportAbsenceDoingDoctor]('" . $period . "', '" . $locationid . "')
-					ORDER BY EMPLOYEENAME ASC
-				")->result_array();
-		# E: HENDI
-		$result = array();
-
-		foreach ($data_waktu_dokter as $row) {
-			# S: HENDI
-			$time_start = $row['TIMESTART'];
-			$time_finish = $row['TIMEFINISH'];
-			$data_dokter_filtered = array_filter($data_dokter, function ($var) use ($time_start, $time_finish) {
-				return ($var['TIMESTART'] == $time_start && $var['TIMEFINISH'] == $time_finish && $var['ABSENCETIME'] <= $time_start);
-			});
-			# reindex array
-			$data_dokter_filtered = array_values($data_dokter_filtered);
-			# E: HENDI
-			$result[] = array('data_dokter' => $data_dokter_filtered, 'waktu_dokter' => $row);
-		}
-		return $result;
-	}
-
 	function updateEmployeeAsm($post = "")
 	{
 		# load database oriskin
@@ -582,23 +547,7 @@ class MApp extends CI_Model
 		return 'Data berhasil disimpan.';
 	}
 
-	function postShift($post = "")
-	{
-		# load database oriskin
-		# lihat di config/database.php
-		$db_oriskin = $this->load->database('oriskin', true);
-		$userid = $this->session->userdata('userid');
-		# query
-		$data = [
-			'shiftcode' => $post['shiftcode'],
-			'shiftname' => $post['shiftname'],
-			'timein' => $post['timein'],
-			'timeout' => $post['timeout'],
-		];
-		$insert = $db_oriskin->insert('msshift', $data);
-		$query = $db_oriskin->query($sql);
-		return 'Data berhasil disimpan.';
-	}
+
 
 	public function get_location_list()
 	{
@@ -1734,12 +1683,7 @@ class MApp extends CI_Model
 			$query = "Exec SpRevenuebySalesIncludeCommission ?, ?";
 			return $this->db_oriskin->query($query, [$period, $userid])->result_array();
 		}
-
-
 	}
-
-
-
 	public function getSummaryCommissionOm($period, $userid)
 	{
 		$query = "Exec SpCommissionOperationalManagerEudora ?, ?, ?";

@@ -473,6 +473,12 @@ class ModelReport extends CI_Model
 		];
 	}
 
+	public function getSummaryReportAchievement($period, $userid)
+	{
+		$query = "Exec SpEudoraReportAchievement ?, ?";
+		return $this->db_oriskin->query($query, [$period, $userid])->result_array();
+	}
+
 
 
 }

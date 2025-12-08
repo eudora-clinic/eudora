@@ -389,6 +389,7 @@ $route['reportTransactionCustomerEventRoadshow'] = 'ControllerReport/content/rep
 $route['addFacilityByLocation'] = 'ControllerReport/content/addFacilityByLocation';
 $route['facilityReportList'] = 'ControllerReport/content/facilityReportList';
 $route['conditionReport/(:any)'] = 'ControllerReport/content/conditionReport/$1';
+$route['reportAchievementConsultant'] = 'ControllerReport/content/reportAchievementConsultant';
 
 
 //ROUTE TEST

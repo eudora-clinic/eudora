@@ -162,6 +162,23 @@ class ControllerReport extends CI_Controller
                     ];
                     $data['mod'] = $type;
                     break;
+                case 'reportAchievementConsultant':
+                    $userid = $this->session->userdata('userid');
+                    $period = $this->input->post('period') ? $this->input->post('period') : date('Y-m');
+                    $start_date = $period . '-01';
+                    $end_date = date('Y-m-t', strtotime($start_date));
+                    $data = [
+                        'summaryRevenueBySales' => $this->ModelReport->getSummaryReportAchievement($period, $userid),
+                        'detailRevenueBySales' => $this->MApp->getDetailRevenueBySalesIncludeCommission($period, $userid),
+                        'detailUnitNewMember' => $this->MApp->getDetailUnitNewMember($period, $userid),
+                        'staffSalesInvoice' => $this->MApp->getStaffSalesInvoice($start_date, $end_date, $userid),
+                        'title' => 'REPORT KPI CONSULTANT',
+                        'content' => 'Report/reportAchievementConsultant',
+                        'locationList' => $this->MApp->get_location_list(),
+                        'period' => $period
+                    ];
+                    $data['mod'] = $type;
+                    break;
             }
             $db_oriskin = $this->load->database('oriskin', true);
             $userid = $this->session->userdata('userid');
