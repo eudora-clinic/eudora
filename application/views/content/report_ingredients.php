@@ -215,7 +215,6 @@ $level = $this->session->userdata('level');
                                     <tfoot>
                                         <tr>
                                             <?php
-                                            // Tentukan jumlah kolom (th) berdasarkan level
                                             if ($level == 4) {
                                                 $thCount = 11;
                                             } elseif ($level == 8) {

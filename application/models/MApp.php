@@ -1676,12 +1676,15 @@ class MApp extends CI_Model
 	public function getSummaryRevenueBySalesIncludeCommission($period, $userid)
 	{
 
-		if ($period >= '2025-08') {
+		if ($period >= '2025-08' && $period <= '2025-10') {
 			$query = "Exec SpEudoraRevenuebySalesIncludeCommission ?, ?, ?";
 			return $this->db_oriskin->query($query, [$period, $userid, 1])->result_array();
-		} else {
+		} else if($period < '2025-08' ) {
 			$query = "Exec SpRevenuebySalesIncludeCommission ?, ?";
 			return $this->db_oriskin->query($query, [$period, $userid])->result_array();
+		}else if($period >= '2025-11'){
+			$query = "Exec SpEudoraRevenuebySalesIncludeCommissionAfterOctober ?, ?, ?";
+			return $this->db_oriskin->query($query, [$period, $userid, 1])->result_array();
 		}
 	}
 	public function getSummaryCommissionOm($period, $userid)
