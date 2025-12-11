@@ -107,44 +107,45 @@
 	<div>
 		<div class="mycontaine">
 			<div class="card p-2 col-md-6">
-                    <form id="form-cari-invoice" method="post"
-                        action="<?= base_url('call_appt_not_active_21days') ?>">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <select id="locationId" name="locationId" class="form-control text-uppercase "
-                                        required="true" aria-required="true">
-                                        <option value="">Select Branch</option>
-                                        <?php foreach ($locationList as $j) { ?>
-                                            <option value="<?= $j['id'] ?>" <?= ($locationId == $j['id'] ? 'selected' : '') ?>>
-                                                <?= $j['name'] ?>
-                                            </option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
+				<form id="form-cari-invoice" method="post" action="<?= base_url('call_appt_not_active_21days') ?>">
+					<div class="row">
+						<div class="col-md-9">
+							<div class="form-group">
+								<select id="locationId" name="locationId" class="form-control text-uppercase "
+									required="true" aria-required="true">
+									<option value="">Select Branch</option>
+									<?php foreach ($locationList as $j) { ?>
+										<option value="<?= $j['id'] ?>" <?= ($locationId == $j['id'] ? 'selected' : '') ?>>
+											<?= $j['name'] ?>
+										</option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
 
-                            <div class="col-md-3 d-flex align-items-end">
-                                <div class="form-group">
-                                    <button type="submit" name="submit"
-                                        class="btn btn-sm top-responsive search_list_booking btn-primary"><i></i>
-                                        Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+						<div class="col-md-3 d-flex align-items-end">
+							<div class="form-group">
+								<button type="submit" name="submit"
+									class="btn btn-sm top-responsive search_list_booking btn-primary"><i></i>
+									Search</button>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
 			<div class="tab-content">
 				<div class="row gx-4">
 					<div class="col-md-12 mt-3">
 						<div class="" id="lastDoing3Month">
 							<div class="card">
-								<h3 class="card-header card-header-info d-flex justify-content-between align-items-center" style="font-weight: bold; color: #666666;">
+								<h3 class="card-header card-header-info d-flex justify-content-between align-items-center"
+									style="font-weight: bold; color: #666666;">
 									CUSTOMER LAST DOING OVER 21 DAYS
 								</h3>
 								<div class="table-wrapper p-4">
 									<div class="table-responsive">
-										<table id="customerLastDoing" class="table table-striped table-bordered" style="width:100%">
+										<table id="customerLastDoing" class="table table-striped table-bordered"
+											style="width:100%">
 											<thead class="bg-thead">
 												<tr>
 													<th style="text-align: center;">NO</th>
@@ -155,6 +156,7 @@
 													<th style="text-align: center;">LAST DOING</th>
 													<th style="text-align: center;">LAST TREATMENT</th>
 													<th style="text-align: center;">APPT</th>
+													<th style="text-align: center;">REMARKS</th>
 													<th style="text-align: center;">ACTION</th>
 												</tr>
 											</thead>
@@ -162,30 +164,47 @@
 												<?php
 												$no = 1;
 												foreach ($listCallAppt as $row) {
-													if (empty($row['LASTDOING'])) continue;
-													
+													if (empty($row['LASTDOING']))
+														continue;
+
 													$lastDoingDate = new DateTime($row['LASTDOING']);
 													$threeMonthsAgo = new DateTime();
 													$threeMonthsAgo->modify('-21 days');
 
-													if ($lastDoingDate > $threeMonthsAgo) continue;
+													if ($lastDoingDate > $threeMonthsAgo)
+														continue;
 
 													$cellphonenumber = preg_replace('/\D/', '', $row['CELLPHONENUMBER']);
 													$country_code = '62';
 													$new_number = substr_replace($cellphonenumber, $country_code, 0, ($cellphonenumber[0] == '0'));
-												?>
+													?>
 													<tr role="" style="font-weight: 400;">
 														<td style="text-align: center;"><?= $no++ ?></td>
 														<td style="text-align: center;"><?= $row['CUSTOMERID'] ?></td>
 														<td style="text-align: center;"><?= $row['LCNAME'] ?></td>
 														<td style="text-align: center;"><?= $row['CELLPHONENUMBER'] ?></td>
-														<td class="text-center"><a href="https://api.whatsapp.com/send?phone=<?= $new_number ?>"><i class="fa-brands fa-whatsapp fa-fade fa-2xl"></i></a></td>
+														<td class="text-center"><a
+																href="https://api.whatsapp.com/send?phone=<?= $new_number ?>"><i
+																	class="fa-brands fa-whatsapp fa-fade fa-2xl"></i></a>
+														</td>
 														<td style="text-align: center;"><?= $row['LASTDOING'] ?></td>
 														<td style="text-align: center;"><?= $row['LASTTREATMENT'] ?></td>
 														<td style="text-align: center;"><?= $row['APPTDATE'] ?></td>
+														<td style="text-align: center;"><?= $row['REMARKS'] ?></td>
 														<td style="text-align: center;">
-															<a class="btn btn-primary btn-sm" href="https://sys.eudoraclinic.com:84/customer/dashboard/<?= $row['CUSTOMERID'] ?>" role="button">Detail</a>
-															<a class="btn btn-primary btn-sm" href="https://sys.eudoraclinic.com:84/app/bookAppointment" role="button" target="_blank">Booking</a>
+															<a class="btn btn-primary btn-sm"
+																href="https://sys.eudoraclinic.com:84/customer/dashboard/<?= $row['CUSTOMERID'] ?>"
+																role="button" target="_blank">Detail</a>
+															<a class="btn btn-primary btn-sm"
+																href="<?= base_url('bookAppointment') ?>" role="button"
+																target="_blank">Booking</a>
+
+															<button class="btn btn-success btn-sm" data-toggle="modal"
+																data-target="#remarkModal"
+																data-customerid="<?= $row['CUSTOMERID'] ?>"
+																data-period="<?= $row['LASTDOING'] ?>">
+																Add Remark
+															</button>
 														</td>
 													</tr>
 												<?php } ?>
@@ -200,20 +219,45 @@
 			</div>
 		</div>
 	</div>
+
+	<div class="modal fade" id="remarkModal" tabindex="-1" aria-labelledby="remarkModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<form id="remarkForm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="remarkModalLabel">Add Remark</h5>
+						<button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<input type="hidden" name="customerid" id="modalCustomerId">
+						<input type="hidden" name="period" id="modalPeriod">
+						<div class="mb-3">
+							<label for="remarks" class="form-label">Remarks</label>
+							<textarea class="form-control" name="remarks" id="remarks" rows="3" required></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">Save Remark</button>
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
 <script>
-	$(document).ready(function() {
+	$(document).ready(function () {
 		$('#tableDailySales').DataTable({
 			"pageLength": 100,
 			"lengthMenu": [5, 10, 15, 20, 25, 100],
 			select: true,
 			'bAutoWidth': false,
-			"drawCallback": function(settings) {
+			"drawCallback": function (settings) {
 				var api = this.api();
 				var startIndex = api.page.info().start; // Mendapatkan nomor awal di halaman saat ini
 				api.column(0, {
 					page: 'current'
-				}).nodes().each(function(cell, i) {
+				}).nodes().each(function (cell, i) {
 					cell.innerHTML = startIndex + i + 1; // Nomor urut dinamis
 				});
 			},
@@ -224,12 +268,12 @@
 			"lengthMenu": [5, 10, 15, 20, 25, 100],
 			select: true,
 			'bAutoWidth': false,
-			"drawCallback": function(settings) {
+			"drawCallback": function (settings) {
 				var api = this.api();
 				var startIndex = api.page.info().start; // Mendapatkan nomor awal di halaman saat ini
 				api.column(0, {
 					page: 'current'
-				}).nodes().each(function(cell, i) {
+				}).nodes().each(function (cell, i) {
 					cell.innerHTML = startIndex + i + 1; // Nomor urut dinamis
 				});
 			},
@@ -242,5 +286,46 @@
 	$('#customerLastDoing').removeClass('display').addClass(
 		'table table-striped table-hover table-compact');
 </script>
+
+<script>
+	$(document).ready(function () {
+		$('#remarkModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget) // Tombol yang memicu modal
+			var customerid = button.data('customerid') // Ambil data-customerid
+			var period = button.data('period')         // Ambil data-period
+
+			var modal = $(this)
+			modal.find('#modalCustomerId').val(customerid)
+			modal.find('#modalPeriod').val(period)
+		});
+
+		$('#remarkForm').submit(function (e) {
+			e.preventDefault();
+
+			var form = $(this);
+			$.ajax({
+				url: "<?= base_url('ControllerPOS/addRemarkCallAppointment21Days') ?>",
+				type: "POST",
+				data: form.serialize(),
+				dataType: 'json',
+				success: function (response) {
+					if (response.status) {
+						$('#remarkModal').modal('hide');
+						form[0].reset();
+						alert('Remark berhasil disimpan!');
+						 location.reload();
+					} else {
+						alert('Remark gagal disimpan!');
+					}
+
+				},
+				error: function (xhr, status, error) {
+					alert('Terjadi kesalahan: ' + error);
+				}
+			});
+		});
+	});
+</script>
+
 
 </html>

@@ -1128,6 +1128,51 @@ class ControllerPOS extends CI_Controller
         echo json_encode($response);
         exit;
     }
+
+
+    public function addRemarkCallAppointment21Days()
+    {
+        // Ambil data dari POST
+         error_reporting(0);
+        ini_set('display_errors', 0);
+        $db_oriskin = $this->load->database('oriskin', true);
+        $customerid = $this->input->post('customerid');
+        $period = $this->input->post('period');
+        $remarks = $this->input->post('remarks');
+        $userId = $this->session->userdata('userid'); // asumsikan ada session login
+
+        if (empty($customerid) || empty($period) || empty($remarks) || empty($userId)) {
+            echo json_encode(['status' => false, 'message' => 'Data tidak lengkap']);
+            return;
+        }
+
+        // Cek apakah record sudah ada
+        $db_oriskin->where('customerid', $customerid);
+        $db_oriskin->where('period', $period);
+        $query = $db_oriskin->get('call_appointment_21days_remarks');
+        $existing = $query->row();
+
+        if ($existing) {
+            $data = [
+                'remarks' => $remarks,
+                'updated_at' => date('Y-m-d H:i:s'),
+                'updated_by' => $userId
+            ];
+            $db_oriskin->where('id', $existing->id);
+            $db_oriskin->update('call_appointment_21days_remarks', $data);
+            echo json_encode(['status' => true, 'message' => 'Remark berhasil diupdate']);
+        } else {
+            $data = [
+                'customerid' => $customerid,
+                'period' => $period,
+                'remarks' => $remarks,
+                'created_at' => date('Y-m-d H:i:s'),
+                'created_by' => $userId
+            ];
+            $db_oriskin->insert('call_appointment_21days_remarks', $data);
+            echo json_encode(['status' => true, 'message' => 'Remark berhasil disimpan']);
+        }
+    }
 }
 
 
