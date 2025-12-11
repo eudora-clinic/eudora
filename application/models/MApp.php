@@ -1689,8 +1689,14 @@ class MApp extends CI_Model
 	}
 	public function getSummaryCommissionOm($period, $userid)
 	{
-		$query = "Exec SpCommissionOperationalManagerEudora ?, ?, ?";
-		return $this->db_oriskin->query($query, [$period, $userid, 1])->result_array();
+
+		if ($period <= '2025-10') {
+			$query = "Exec SpCommissionOperationalManagerEudora ?, ?, ?";
+			return $this->db_oriskin->query($query, [$period, $userid, 1])->result_array();
+		} else if($period > '2025-10' ) {
+			$query = "Exec SpCommissionOperationalManagerEudoraAfterOctober ?, ?, ?";
+			return $this->db_oriskin->query($query, [$period, $userid, 1])->result_array();
+		}
 	}
 
 	public function getReportHandWorkCommissionDokterTherapist($dateStart, $dateEnd, $loationId)

@@ -362,6 +362,12 @@ $level = $this->session->userdata('level');
 										href="<?= base_url('reportGuestCustomerServiceOnline') ?>">REPORT COMMISSION
 										TRILOGY</a>
 
+									<a class="dropdown-item"
+										href="<?= base_url('reportInvoiceLifeTimePackage') ?>">REPORT COMMISSION INVOICE LIFETIME PACKAGE</a>
+
+									<a class="dropdown-item"
+										href="<?= base_url('reportCommissionInvoiceProductTherapist') ?>">REPORT COMMISSION INVOICE PRODUCT THERAPIST</a>
+
 								</div>
 							</li>
 							<li class="nav-item dropdown">

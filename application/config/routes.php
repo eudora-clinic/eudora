@@ -390,6 +390,9 @@ $route['addFacilityByLocation'] = 'ControllerReport/content/addFacilityByLocatio
 $route['facilityReportList'] = 'ControllerReport/content/facilityReportList';
 $route['conditionReport/(:any)'] = 'ControllerReport/content/conditionReport/$1';
 $route['reportAchievementConsultant'] = 'ControllerReport/content/reportAchievementConsultant';
+$route['reportInvoiceLifeTimePackage'] = 'ControllerReport/content/reportInvoiceLifeTimePackage';
+$route['reportCommissionInvoiceProductTherapist'] = 'ControllerReport/content/reportCommissionInvoiceProductTherapist';
+
 
 
 //ROUTE TEST
