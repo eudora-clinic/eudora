@@ -96,7 +96,9 @@
     ?>
 
     <div class="row p-3 row">
-        <button type="button" class="btn btn-primary btn-sm" onclick="updateCustomer(<?= $detail['id'] ?>, <?= $level ?>)" style="background-color: #c49e8f; color: black;">UPDATE</button>
+        <button type="button" class="btn btn-primary btn-sm"
+            onclick="updateCustomer(<?= $detail['id'] ?>, <?= $level ?>)"
+            style="background-color: #c49e8f; color: black;">UPDATE</button>
         <!-- <a href="https://sys.eudoraclinic.com:84/app/createTransaction" class="btn btn-primary btn-sm ml-2">
             <i class="bi bi-plus-circle"></i> BACK
         </a> -->
@@ -104,48 +106,62 @@
     <div class="mycontaine">
         <div class="hidden mt-2" id="role-information">
             <div class="card p-4">
-                <h6 class="text-secondary mb-2 text-center" style="font-weight: bold; text-transform: uppercase; font-size: 16px !important;">
+                <h6 class="text-secondary mb-2 text-center"
+                    style="font-weight: bold; text-transform: uppercase; font-size: 16px !important;">
                     <i class="bi bi-wallet2"></i> DETAIL CUSTOMER
                 </h6>
                 <div class="form-row">
                     <div class="form-column">
-                        <label for="firstname" class="form-label mt-2"><strong>FIRSTNAME:</strong><span class="text-danger">*</span></label>
-                        <input type="text" name="firstname" id="firstname" value="<?= isset($detail['firstname']) ? $detail['firstname'] : '' ?>">
+                        <label for="firstname" class="form-label mt-2"><strong>FIRSTNAME:</strong><span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="firstname" id="firstname"
+                            value="<?= isset($detail['firstname']) ? $detail['firstname'] : '' ?>">
 
-                        <label for="lastname" class="form-label mt-2"><strong>LASTNAME:</strong><span class="text-danger">*</span></label>
-                        <input type="text" name="lastname" id="lastname" value="<?= isset($detail['lastname']) ? $detail['lastname'] : '' ?>">
+                        <label for="lastname" class="form-label mt-2"><strong>LASTNAME:</strong><span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="lastname" id="lastname"
+                            value="<?= isset($detail['lastname']) ? $detail['lastname'] : '' ?>">
 
                         <label for="cellphonenumber" class="form-label mt-2">
                             <strong>CELLPHONENUMBER:</strong><span class="text-danger">*</span>
                         </label>
                         <input type="text" name="cellphonenumber" id="cellphonenumber"
                             value="<?= isset($detail['cellphonenumber']) ? $detail['cellphonenumber'] : '' ?>"
-                            <?= (isset($detail['cellphonenumber']) && strtolower($detail['cellphonenumber']) !== 'nan' && $detail['cellphonenumber'] !== '') ? 'disabled' : '' ?>
-                            maxlength="14" placeholder="Masukkan nomor HP diawali 08"
-                            onkeydown="validateKey(event)"
-                            oninput="validateInput(this)">
+                            <?= (isset($detail['cellphonenumber'])
+                                && strtolower($detail['cellphonenumber']) !== 'nan'
+                                && $detail['cellphonenumber'] !== ''
+                                && $level != 4 
+                            ) ? 'disabled' : '' ?> maxlength="14" placeholder="Masukkan nomor HP diawali 08"
+                            onkeydown="validateKey(event)" oninput="validateInput(this)">
                         <small class="text-danger" id="error-message"></small>
                     </div>
 
                     <div class="form-column">
-                        <label for="customercode" class="form-label mt-2"><strong>CUSTOMER CODE:</strong><span class="text-danger">*</span></label>
-                        <input type="text" name="customercode" id="customercode" value="<?= isset($detail['customercode']) ? $detail['customercode'] : '' ?>">
+                        <label for="customercode" class="form-label mt-2"><strong>CUSTOMER CODE:</strong><span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="customercode" id="customercode"
+                            value="<?= isset($detail['customercode']) ? $detail['customercode'] : '' ?>">
 
                         <label for="email" class="form-label mt-2"><strong>EMAIL:</strong></label>
-                        <input type="text" name="email" id="email" value="<?= isset($detail['email']) ? $detail['email'] : '' ?>">
+                        <input type="text" name="email" id="email"
+                            value="<?= isset($detail['email']) ? $detail['email'] : '' ?>">
 
                         <label for="googlename" class="form-label mt-2"><strong>GOOGLE ACCOUNT NAME:</strong></label>
-                        <input type="text" name="googlename" id="googlename" value="<?= isset($detail['googlename']) ? $detail['googlename'] : '' ?>">
+                        <input type="text" name="googlename" id="googlename"
+                            value="<?= isset($detail['googlename']) ? $detail['googlename'] : '' ?>">
                     </div>
                     <div class="form-column">
                         <label for="ssid" class="form-label mt-2"><strong>SSID:</strong></label>
-                        <input type="number" name="ssid" id="ssid" value="<?= isset($detail['ssid']) ? $detail['ssid'] : '' ?>">
+                        <input type="number" name="ssid" id="ssid"
+                            value="<?= isset($detail['ssid']) ? $detail['ssid'] : '' ?>">
 
                         <label for="dateofbirth" class="form-label mt-2"><strong>DATE OF BIRTH:</strong></label>
-                        <input type="date" name="dateofbirth" id="dateofbirth" value="<?= isset($detail['dateofbirth']) ? date('Y-m-d', strtotime($detail['dateofbirth'])) : '' ?>">
+                        <input type="date" name="dateofbirth" id="dateofbirth"
+                            value="<?= isset($detail['dateofbirth']) ? date('Y-m-d', strtotime($detail['dateofbirth'])) : '' ?>">
 
                         <label for="linkreview" class="form-label mt-2"><strong>LINK REVIEW:</strong></label>
-                        <input type="text" name="linkreview" id="linkreview" value="<?= isset($detail['linkreview']) ? $detail['linkreview'] : '' ?>">
+                        <input type="text" name="linkreview" id="linkreview"
+                            value="<?= isset($detail['linkreview']) ? $detail['linkreview'] : '' ?>">
 
                         <label for="employeeid" class="form-label mt-2"><strong>STAFF ADD LINK:</strong></label>
                         <select id="employeeid" name="employeeid" class="" required="true" aria-required="true">
@@ -217,11 +233,11 @@
                 data: JSON.stringify(transactionData),
                 contentType: 'application/json',
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     try {
                         alert('Berhasil update data customer');
                         if (response.status === 'success') {
-                            setTimeout(function() {
+                            setTimeout(function () {
                                 location.reload();
                             }, 200);
                         } else {
@@ -234,7 +250,7 @@
                     }
                 },
 
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('AJAX error:', status, error);
                     alert('Terjadi kesalahan saat mengirim data.');
                 }
