@@ -183,7 +183,7 @@
             });
 
             // langsung set default ID 1863
-            let option = new Option("ATRISARBOWO PURCHASING", 1863, true, true);
+            let option = new Option("Agus Tri Sarbowo", 1863, true, true);
             // 👆 ganti "Employee 1863" dengan nama sebenarnya dari DB
             $('#employeeid').append(option).trigger('change');
 
@@ -198,15 +198,13 @@
                         return { search: params.term };
                     },
                     processResults: function (data) {
-                        // Tambahkan E-COMMERCE di hasil AJAX juga supaya tidak hilang
                         let results = data.map(s => ({ id: s.id, text: s.name }));
-                        results.unshift({ id: 999, text: "E-COMMERCE" }); // ⬅ tambah di urutan atas
+                        results.unshift({ id: 999, text: "E-COMMERCE" });
                         return { results };
                     }
                 }
             });
 
-            // pastikan tidak langsung terpilih
             $('#supplierid').val(null).trigger('change.select2');
 
 

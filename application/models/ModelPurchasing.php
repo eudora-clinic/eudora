@@ -1544,6 +1544,7 @@ class ModelPurchasing extends CI_Model
 	{
 		$this->db_oriskin->select('e.id, e.name as text');
 		$this->db_oriskin->from('msemployee e');
+		$this->db_oriskin->where('e.isdeleted', 0);
 
 		if ($level == 1 && !empty($locationid)) {
 			$this->db_oriskin->join('msemployeedetail ed', 'ed.employeeid = e.id', 'left');

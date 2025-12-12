@@ -1365,11 +1365,11 @@ class MApp extends CI_Model
 	{
 		if ($level == 1) {
 			return $this->db_oriskin->query("
-          select a.id, a.name from msemployee a inner join msemployeedetail b on a.id = b.employeeid where (b.locationid = ? or a.title = 'PURCHASING') and a.isactive = 1
+          select a.id, a.name from msemployee a inner join msemployeedetail b on a.id = b.employeeid where (b.locationid = ? or a.title = 'PURCHASING') and a.isactive = 1 and a.isdeleted = 0
         ", [$location_id])->result_array();
 		} else {
 			return $this->db_oriskin->query("
-			select a.id, a.name from msemployee a inner join msemployeedetail b on a.id = b.employeeid where (b.jobid = 20 or a.title = 'PURCHASING') and a.isactive = 1
+			select a.id, a.name from msemployee a inner join msemployeedetail b on a.id = b.employeeid where (b.jobid = 20 or a.title = 'PURCHASING') and a.isactive = 1 and a.isdeleted = 0
 		  ")->result_array();
 		}
 	}

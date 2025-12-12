@@ -3380,7 +3380,7 @@ class ControllerPurchasing extends CI_Controller
 	public function searchSalesSuppliers()
 	{
 		$db_oriskin = $this->load->database('oriskin', true);
-		$search = $this->input->get('q');
+		$search = $this->input->get('search');
 
 		$db_oriskin->select('
 			ss.id AS id,
