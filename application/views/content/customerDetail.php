@@ -278,8 +278,8 @@
             let errorMessage = document.getElementById("error-message");
 
             // Pastikan input selalu mulai dengan "08"
-            if (!input.value.startsWith("08")) {
-                input.value = "08";
+            if (!input.value.startsWith("0")) {
+                input.value = "0";
             }
 
             // Pastikan hanya angka yang diinputkan
@@ -291,7 +291,7 @@
             }
 
             // Tampilkan pesan error jika panjang tidak sesuai
-            if (input.value.length < 10) {
+            if (input.value.length < 4) {
                 errorMessage.innerText = "Nomor HP minimal 10 digit.";
             } else {
                 errorMessage.innerText = "";
